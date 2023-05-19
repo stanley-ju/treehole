@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+	<title>前后端测试</title>
+</head>
+
+<body>
+    <table>
+    <tr>
+        <td><label for="StuNumber">学号</label></td>
+        <td><input class="student-info" type="text" id="StuNumber" name="stuNumber" required pattern="^\d{10}$"></td>
+        <td><label for="Department">院系</label></td>
+        <td><input class="student-info" type="text" id="Department" name="department" required></td>
+    </tr>
+    </table>
+    <button onclick="createStu()">创建</button>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script src="./script.js"></script>
+<script>
+    function createStu(){
+        let num = document.getElementById("StuNumber");
+        let de = document.getElementById("Department");
+        create_stu(num.value,de.value);
+    }
+</script>
