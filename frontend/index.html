@@ -1,31 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>P大树洞</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="./style.css" type="text/css">
-	<title>前后端测试</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="icon" href="head_icon.ico" type="image/x-icon">
 </head>
-
 <body>
-    <table>
-    <tr>
-        <td><label for="StuNumber">学号</label></td>
-        <td><input class="student-info" type="text" id="StuNumber" name="stuNumber" required pattern="^\d{10}$"></td>
-        <td><label for="Department">院系</label></td>
-        <td><input class="student-info" type="text" id="Department" name="department" required></td>
-    </tr>
-    </table>
-    <button onclick="createStu()">创建</button>
+    <!--登录/注册界面-->
+    <div class="login_or_signup">
+        <div>
+            <table>
+                <tr>
+                    <td><label for="stu_number">学号</label></td>
+                    <td><input class="student-info" type="text" id="stu_number" name="stuNumber" required pattern="^\d{10}$"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">密码</label></td>
+                    <td><input class="student-info" type="password" id="password" name="password" required></td>
+                </tr>
+            </table>
+            <button id = "login_or_signup_button" onclick="loginOrSignup()">登录</button>
+            <span id="turn_to_login_or_signup">还未注册?</span>
+        </div>
+    </div>
+
+    <!--主页的导航栏，标为灰色-->
+    <div class="navigator">
+        <div>P大树洞</div>
+        
+        <div>
+            <!--搜索框和搜索键-->
+            <input type="text" name="search" placeholder="搜索">
+            <button class="search">搜索</button>
+            <!--呼出发帖页-->
+            <button class="call_post_page">发洞</button>
+            <!--呼出收藏夹-->
+            <button class="call_collection">收藏</button>
+            <!--呼出todolist-->
+            <button class="call_todolist">待办</button>
+            <!--呼出用户信息界面-->
+            <button class="call_account">账户</button>
+
+        </div>
+    </div>
+    </br></br>
+    <!--一条一条的树洞条目放这里，每一行最多10条回复，也就是1个host_element和10个comment_element-->
+    <div class="post_items">
+        <div>123</div>
+        <div>123</div>
+        <div>123</div>
+        <div>123111111111111111111111111111111111111111111111111111111</div>
+        <div>123</div>
+        <!--每一个条目，class为item-->
+        <div class="item">
+            <!--洞主的言论和评论-->
+            <span class="host_element"></span>
+            <span class="comment_element"></span>
+        </div>
+
+
+    </div>
+    <!--占页面右边一半的侧栏-->
+    <div class="sidebar">
+        <!--关闭按钮和标题，显示此时侧边栏装着下面的哪一个种类的信息-->
+        <div class="sidebar_head">
+            <span><svg t="1684503689922" class="close_sidebar" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2723" width="20" height="20"><path d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m0-572.330667L300.629333 240.213333a42.538667 42.538667 0 0 0-60.16 0.213334 42.410667 42.410667 0 0 0-0.213333 60.16L451.669333 512 240.213333 723.370667a42.538667 42.538667 0 0 0 0.213334 60.16 42.410667 42.410667 0 0 0 60.16 0.213333L512 572.330667l211.370667 211.413333a42.538667 42.538667 0 0 0 60.16-0.213333 42.410667 42.410667 0 0 0 0.213333-60.16L572.330667 512l211.413333-211.370667a42.538667 42.538667 0 0 0-0.213333-60.16 42.410667 42.410667 0 0 0-60.16-0.213333L512 451.669333z" fill="#3D3D3D" p-id="2724"></path></svg></span>
+            <span class="sidebar_title">change sidebar title</span>
+        </div>
+        <!--详情页-->
+        <div class="details">
+            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+            
+        </div>
+        <!--个人信息页-->
+        <div class="account_info">
+
+        </div>
+        <!--树洞编辑页-->
+        <div class="edit_post">
+
+        </div>
+        <!--todolist-->
+        <div class="todolist">
+
+        </div>
+    </div>
+    <!--占页面左边一半的遮罩层-->
+    <div class="mask"></div>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.js"></script>
 <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
 <script src="./script.js"></script>
 <script>
-    function createStu(){
-        let num = document.getElementById("StuNumber");
-        let de = document.getElementById("Department");
-        create_stu(num.value,de.value);
+    function loginOrSignup(){
+        let button = document.getElementById("login_or_signup_button");
+        let flag = (button.innerHTML == "登录") ? "login" : "signup";
+        let num = document.getElementById("stu_number");
+        let psw = document.getElementById("password");
+        login_or_signup(num.value, psw.value, flag);
     }
 </script>
+</html>
