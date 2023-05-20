@@ -22,8 +22,8 @@ func Core() gin.HandlerFunc {
 
 func CollectRoute(env *gin.Engine) *gin.Engine {
 	env.Use(Core())
-	env.POST("/user/register", controller.Register)
-	env.GET("/user/register", controller.Register)
+	env.POST("/user/signup", controller.Register)
+	env.POST("/user/login", controller.Login)
 
 	return env
 }

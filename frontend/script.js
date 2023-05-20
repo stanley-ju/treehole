@@ -53,7 +53,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 function login_or_signup (student_number, password, flag) {//flag = "login"/"register"
     return new Promise((resolve,reject) => {
-        axios.post('user/register',qs.stringify({
+        axios.post('user/'+flag,qs.stringify({
             flag:flag,
             student_number:student_number,
             password:password
