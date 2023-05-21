@@ -18,12 +18,14 @@ body {
 	color: #ffffff;
 	overflow-x: hidden;
 	max-width: 800px;
+	background-image: none;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
+/*导航栏相关~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .navigator {
-	display: none;
-
-
+	display: block;
 	position: fixed;
 	background: #373737;
 	width: 100%;
@@ -33,62 +35,9 @@ body {
 	margin: 0;
 }
 
-.post_items {
-	display: none;
-
-
-	background: #b11010;
-	width: 80%;
-	height: auto;
-	left: 10%;
-	margin-left: 8%;
-	margin-right: 12%;
-}
-
-/*侧边栏*/
-.sidebar {
-	display: none;
-
-
-
-	width: 50%;
-	height: 100%;
-	position: fixed;
-	right: 0;
-	top: 44.33px;
-	background-color: #000c40;
-	z-index: 1;
-	overflow-y: scroll;
-}
-::-webkit-scrollbar {
-	display: none;
-}
-
-.sidebar_head {
-	width: 100%;
-	background-color: #76a886;
-	height: 30px;
-	text-align: center;
-}
-
-.close_sidebar {
-	float: left;
-}
-
-/*遮罩层*/
-.mask {
-	display: none;
-	width: 50%;
-	height: 100%;
-	position: fixed;
-	left: 0;
-	top: 44.33px;
-	background-color: rgba(0,0,0,0.5);
-	z-index: 1;
-}
-
-/*登录界面*/
+/*登录界面~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .login_or_signup {
+	display: none;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -100,3 +49,140 @@ body {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+/*主页树洞条目~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.post_items {
+	display: block;
+
+
+	background: #b11010;
+	width: 80%;
+	height: auto;
+	left: 10%;
+	margin-left: 8%;
+	margin-right: 12%;
+}
+
+/*左侧遮罩层*/
+.mask {
+	display: none;
+	width: 50%;
+	height: calc(100% - 44.33px);
+	position: fixed;
+	left: 0;
+	top: 44.33px;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 1;
+}
+
+/*
+ * 右侧边栏及各种内容~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+.sidebar {
+	display: block;
+	width: 50%;
+	height: calc(100% - 44.33px);
+	position: fixed;
+	right: 0;
+	top: 44.33px;
+	background-color: #000c40;
+	z-index: 1;
+	overflow-y: scroll;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+/*边栏的顶部标签*/
+.sidebar_head {
+	width: 100%;
+	background-color: #76a886;
+	height: 30px;
+	text-align: center;
+}
+/*侧边栏的子div*/
+.sidebar_content{
+	margin: 0px 10px 0px 10px;
+	background-color: #711919;
+	height: calc(100% - 30px);
+}
+/*关闭按钮*/
+.close_sidebar {
+	float: left;
+}
+/*侧边栏的标题。如果侧边栏是树洞详情的话，放“刷新”“逆序”“收藏”三个按钮*/
+#sidebar_title{
+	/* display: none; */
+}
+.sidebar_buttons{
+	display: none;
+}
+
+
+/*边栏-详情页~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.sidebar #details{
+	display: none;
+}
+	/*发言和评论条目*/
+#detailed_content{
+	height:88%;
+	margin:0;
+	overflow: scroll;
+}
+	/*输入*/
+.sidebar_content #comment{
+	height: 10%;
+	width: calc(50% - 20px);
+	position: fixed;
+	bottom: 0;
+}
+		/*输入框*/
+#comment_input{
+	position: absolute;
+	height: calc(100% - 1px);
+	width: 90%;
+	resize: none;
+	overflow: scroll;
+}
+		/*提交按钮*/
+#comment_submit{
+	position: absolute;
+	right: 1px;
+	width: 8%;
+	height: 100%;
+}
+
+
+
+/*边栏-账户信息~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.sidebar #account_info{
+	display: none;
+	text-align: center;
+}
+
+
+/*边栏-编辑树洞~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.sidebar #edit_post{
+	display: none;
+}
+/*输入框*/
+#post_input{
+	width:calc(100% - 7px);
+	height:90%;
+	resize: none;
+	overflow: scroll;
+}
+/*提交按钮*/
+#post_submit{
+	width: calc(100% - 20px);
+	height: calc(10% - 8px);
+	position: absolute;
+	left: 10px;
+	bottom: 0;
+}
+
+
+/*边栏-todolist~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.sidebar #todolist{
+	/* display: none; */	
+}
+
