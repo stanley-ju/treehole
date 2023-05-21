@@ -21,15 +21,14 @@
                     <td><input class="student-info" type="password" id="password" name="password" required></td>
                 </tr>
             </table>
-            <button id = "login_or_signup_button" onclick="loginOrSignup()">登录</button>
+            <button id = "login_or_signup_button" onclick="login_or_signup()">登录</button>
             <span id="turn_to_login_or_signup">还未注册?</span>
         </div>
     </div>
 
     <!--主页的导航栏，标为灰色-->
     <div class="navigator">
-        <div>P大树洞</div>
-        
+        <div>P大树洞</div>   
         <div>
             <!--搜索框和搜索键-->
             <input type="text" name="search" placeholder="搜索">
@@ -67,28 +66,64 @@
         <!--关闭按钮和标题，显示此时侧边栏装着下面的哪一个种类的信息-->
         <div class="sidebar_head">
             <span><svg t="1684503689922" class="close_sidebar" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2723" width="20" height="20"><path d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m0-572.330667L300.629333 240.213333a42.538667 42.538667 0 0 0-60.16 0.213334 42.410667 42.410667 0 0 0-0.213333 60.16L451.669333 512 240.213333 723.370667a42.538667 42.538667 0 0 0 0.213334 60.16 42.410667 42.410667 0 0 0 60.16 0.213333L512 572.330667l211.370667 211.413333a42.538667 42.538667 0 0 0 60.16-0.213333 42.410667 42.410667 0 0 0 0.213333-60.16L572.330667 512l211.413333-211.370667a42.538667 42.538667 0 0 0-0.213333-60.16 42.410667 42.410667 0 0 0-60.16-0.213333L512 451.669333z" fill="#3D3D3D" p-id="2724"></path></svg></span>
-            <span class="sidebar_title">change sidebar title</span>
+            <span id="sidebar_title">change sidebar title</span>
+            <span class="sidebar_buttons">
+                <!--刷新、逆序、收藏3个按钮-->
+                <button id="refresh" onclick="refresh()">刷新</button>
+                <button id="reverse" onclick="reverse()">逆序</button>
+                <button id="collect" onclick="collect()">收藏</button>
+            </span>
         </div>
         <!--详情页-->
-        <div class="details">
-            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
-            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
-            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
-            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
-            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
-            <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div>
+        <div class="sidebar_content" id="details">
+            <!---->
+            <!--条目-->
+            <ul id="detailed_content">
+                这里放一个一个一个的条目
+            </ul>
             
+            <!--评论编辑输入框-->
+            <div id="comment">
+                <textarea name="comment" id="comment_input"></textarea>
+                <button id="comment_submit">提交</button>
+            </div>
         </div>
         <!--个人信息页-->
-        <div class="account_info">
-
+        <div class="sidebar_content" id="account_info">
+            <!--退出登录的按钮-->
+            <button id="logout" onclick="logout()">退出登录</button>
+            <!--表单，包括旧密码，新密码，确认新密码，修改密码的按钮-->
+            <form action="" id="change_password">
+                <table>
+                    <tr>
+                        <td><label for="old_password">旧密码</label></td>
+                        <td><input type="password" name="old_password" id="old_password"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="new_password">新密码</label></td>
+                        <td><input type="password" name="new_password" id="new_password"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirm_new_password">确认新密码</label></td>
+                        <td><input type="password" name="confirm_new_password" id="confirm_new_password"></td>
+                    </tr>
+                </table>
+                <button id="change_password_button" onclick="change_password()">修改密码</button>
+            </form>
+            <!--修改页面背景-->
+            <form>
+                <label for="fileUpload">选择图片：</label>
+                <input type="file" id="fileUpload" name="fileUpload">
+                <button type="submit" id="uploadBtn">上传</button>
+            </form>
         </div>
         <!--树洞编辑页-->
-        <div class="edit_post">
-
+        <div class="sidebar_content" id="edit_post">
+            <textarea name="post" id="post_input"></textarea>    
+            <button id="post_submit" onclick="submit_post()">提交</button>
         </div>
         <!--todolist-->
-        <div class="todolist">
+        <div class="sidebar_content" id="todolist">
 
         </div>
     </div>
@@ -99,13 +134,5 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.js"></script>
 <script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
 <script src="./script.js"></script>
-<script>
-    function loginOrSignup(){
-        let button = document.getElementById("login_or_signup_button");
-        let flag = (button.innerHTML == "登录") ? "login" : "signup";
-        let num = document.getElementById("stu_number");
-        let psw = document.getElementById("password");
-        login_or_signup(num.value, psw.value, flag);
-    }
-</script>
+
 </html>
