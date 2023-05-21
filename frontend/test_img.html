@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>P大树洞</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+	<h1>上传图片</h1>
+	<form>
+		<input type="file" id="fileInput">
+		<button type="button" onclick="uploadAvator()">上传</button>
+	</form>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+</html>
+
+<script>
+    function uploadAvator() {
+        var fileInput = document.getElementById("fileInput");
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append("avator", file);
+        formData.append("studentNumber","1900012997");
+        axios.post("http://localhost:8080/user/uploadAvator", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          alert("上传成功！");
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("上传失败！");
+        });
+      }
+</script>

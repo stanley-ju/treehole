@@ -24,6 +24,6 @@ func CollectRoute(env *gin.Engine) *gin.Engine {
 	env.Use(Core())
 	env.POST("/user/signup", controller.Register)
 	env.POST("/user/login", controller.Login)
-
+	env.POST("user/uploadAvator", controller.UploadAvator)
 	return env
 }
