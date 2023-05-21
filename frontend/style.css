@@ -79,7 +79,7 @@ body {
  * 右侧边栏及各种内容~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 .sidebar {
-	display: block;
+	display: none;
 	width: 50%;
 	height: calc(100% - 44.33px);
 	position: fixed;
