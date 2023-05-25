@@ -85,13 +85,25 @@
             <!--评论编辑输入框-->
             <div id="comment">
                 <textarea name="comment" id="comment_input"></textarea>
-                <button id="comment_submit">提交</button>
+                <button id="comment_submit" onclick="submit_comment()">提交</button>
             </div>
         </div>
         <!--个人信息页-->
         <div class="sidebar_content" id="account_info">
             <!--退出登录的按钮-->
             <button id="logout" onclick="logout()">退出登录</button>
+            <!--用户信息，包括学号，头像，背景-->
+            <div id="user_info">
+                <div id="user_id">学号：</div>
+                <div>
+                    <div>头像预览</div>
+                    <img id="user_avatar" src="" alt="头像加载失败"></img>
+                </div>
+                <div>
+                    <div>背景预览</div>
+                    <img id="user_background" src="" alt="背景加载失败"></img>
+                </div>
+            </div>
             <!--表单，包括旧密码，新密码，确认新密码，修改密码的按钮-->
             <form action="" id="change_password">
                 <table>
@@ -103,18 +115,20 @@
                         <td><label for="new_password">新密码</label></td>
                         <td><input type="password" name="new_password" id="new_password"></td>
                     </tr>
-                    <tr>
-                        <td><label for="confirm_new_password">确认新密码</label></td>
-                        <td><input type="password" name="confirm_new_password" id="confirm_new_password"></td>
-                    </tr>
                 </table>
                 <button id="change_password_button" onclick="change_password()">修改密码</button>
-            </form>
+            </form></br>
             <!--修改页面背景-->
+            <div>修改背景</div>
             <form>
-                <label for="fileUpload">选择图片：</label>
-                <input type="file" id="fileUpload" name="fileUpload">
-                <button type="submit" id="uploadBtn">上传</button>
+                <input type="file" id="bgimg" name="fileUpload">
+                <button type="submit" id="bgupload">上传</button>
+            </form></br>
+            <!--修改头像-->
+            <div>修改头像</div>
+            <form>
+                <input type="file" id="avatar" name="fileUpload">
+                <button type="submit" id="avatarupload">上传</button>
             </form>
         </div>
         <!--树洞编辑页-->
