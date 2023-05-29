@@ -1,5 +1,5 @@
 "use strict";
-var id = "1919810996"; //等会修改成从后端获取的id
+var id = "";
 //axios的配置
 axios.defaults.baseURL = "http://localhost:8080/";
 var qs = Qs;
@@ -26,8 +26,8 @@ function logout() {
 //每次刷新页面，加载背景，主页请求帖子
 function init() {
 	//从cookie中获取学号，如果过期，则跳转到登录界面
-	id = document.cookie;
-	if (document.cookie == "") {
+	id = document.cookie.split(";")[0].split("=")[1];	
+	if (id == "") {
 		logout();
 		return;
 	}
@@ -36,6 +36,7 @@ function init() {
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
 			let backgroundURL = response.data.backgroundURL;
+			console.log(backgroundURL);
 			document.body.style.backgroundImage = `url(${backgroundURL})`;
 		}).catch((error) => {
 			console.error(error);
@@ -108,7 +109,6 @@ turn_to_login_or_signup.onclick = function () {
 
 //登录/注册
 function login_or_signup() {
-	//flag = "login"/"register"
 	let button = document.getElementById("login_or_signup_button");
 	let flag = button.innerHTML == "登录" ? "login" : "signup";
 	let num = document.getElementById("stu_number"); //num.value是个字符串，所以无需转化
@@ -129,7 +129,8 @@ function login_or_signup() {
 				resolve("done");
 				//缓存学号，用cookie
 				id = num.value;
-				document.cookie = id;
+				document.cookie = "id=" + id + "; expires=" + new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+				init();
 			}).catch((error) => {
 				alert(error);
 				reject(error);
