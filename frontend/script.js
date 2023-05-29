@@ -35,7 +35,7 @@ function init() {
 	axios
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
-			let backgroundURL = response.backgroundURL;
+			let backgroundURL = response.data.backgroundURL;
 			document.body.style.backgroundImage = `url(${backgroundURL})`;
 		}).catch((error) => {
 			console.error(error);
@@ -273,15 +273,10 @@ function call_account_page() {
 	axios
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
-			console.log(response)
 			let avatarURL = response.data.avatarURL;
-			let backgroundURL = response.data.backgroundURL;
 			console.log("Avatar URL:", avatarURL);
-			console.log("Background URL:", backgroundURL);
 			//将avatar的src属性设置为avatarURL
-			avatar.src = avatarURL;
-			//将background的src属性设置为backgroundURL
-			background.src = backgroundURL;
+			avatar.src = avatarURL;			
 		})
 		.catch((error) => {
 			console.error(error);
@@ -322,7 +317,9 @@ function open_post(post_number) {
 
 //树洞详情页中，刷新逆序收藏（或取消收藏）
 function refresh() {
-	//刷新
+	//刷新就是
+
+
 
 
 
@@ -424,7 +421,7 @@ avatar.addEventListener("click", function (event) {
 			}
 		};
 		//更新账户界面
-		document.getElementById("user_avatar").src = dataURL;
+		document.getElementById("user_avatar").style.src = dataURL;
 	};
 });
 
