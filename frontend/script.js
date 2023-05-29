@@ -63,7 +63,7 @@ function init() {
 			console.error(error);
 		});
 }
-// init();
+init();
 
 //打开侧边栏和遮罩层
 function open_sidebar() {
@@ -273,8 +273,9 @@ function call_account_page() {
 	axios
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
-			let avatarURL = response.avatarURL;
-			let backgroundURL = response.backgroundURL;
+			console.log(response)
+			let avatarURL = response.data.avatarURL;
+			let backgroundURL = response.data.backgroundURL;
 			console.log("Avatar URL:", avatarURL);
 			console.log("Background URL:", backgroundURL);
 			//将avatar的src属性设置为avatarURL

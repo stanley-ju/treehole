@@ -10,7 +10,8 @@ type StudentInfo struct {
 	// Password  string `gorm:"size:255;not null"`
 	StudentNumber string `gorm:"varchar(255);prmaryKey"`
 	Password      string `gorm:"varchar(255);not null"`
-	AvatorURL     string `gorm:"varchar(255);not null"`
+	AvatarURL     string `gorm:"varchar(255);not null"`
+	BackgroundURL string `gorm:"varchar(255);not null"`
 }
 
 func (StudentInfo) TableName() string {

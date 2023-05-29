@@ -24,6 +24,22 @@ func CollectRoute(env *gin.Engine) *gin.Engine {
 	env.Use(Core())
 	env.POST("/user/signup", controller.Register)
 	env.POST("/user/login", controller.Login)
-	env.POST("user/uploadAvator", controller.UploadAvator)
+	env.POST("/user/uploadAvator", controller.UploadAvatar)
+	env.POST("/user/uploadBackground", controller.UploadBackground)
+	env.POST("/user/changePassword", controller.ChangePassword)
+	env.POST("/user/queryStudentInfo", controller.QueryStudentInfo)
+
+	env.POST("/treehole/submitPost", controller.SubmitPost)
+	env.POST("/treehole/commentPost", controller.CommentPost)
+	env.POST("/treehole/queryPost", controller.QueryPost)
+	env.POST("/treehole/querySinglePost", controller.QuerySinglePost)
+	env.POST("/treehole/favoritePost", controller.FavoritePost)
+	env.POST("/treehole/cancelFavoritePost", controller.CancelFavoritePost)
+	env.POST("/treehole/queryFavoritePost", controller.QueryFavoritePost)
+	env.POST("/treehole/queryPostWithKeyword", controller.QueryPostWithKeyword)
+
+	env.POST("/treehole/todoCreate", controller.TodoCreate)
+	env.POST("/treehole/todoQueryAll", controller.TodoQueryAll)
+	env.POST("/treehole/todoUpdate", controller.TodoUpdate)
 	return env
 }

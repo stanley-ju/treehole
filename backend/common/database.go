@@ -30,6 +30,10 @@ func InitDB() *gorm.DB {
 	}
 	//自动创建数据表
 	db.AutoMigrate(&model.StudentInfo{})
+	db.AutoMigrate(&model.TreeholePost{})
+	db.AutoMigrate(&model.PostComment{})
+	db.AutoMigrate(&model.FavourPost{})
+	db.AutoMigrate(&model.Todo{})
 
 	DB = db
 	return db

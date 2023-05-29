@@ -13,18 +13,23 @@ func Register(ctx *gin.Context) {
 	newStu := model.StudentInfo{
 		StudentNumber: ctx.PostForm("student_number"),
 		Password:      ctx.PostForm("password"),
-		AvatorURL:     "http://localhost:8080/imgs/initAvator.jpg",
+		AvatarURL:     "http://localhost:8081/treehole/imgs/initAvatar.jpg",
+		BackgroundURL: "http://localhost:8081/treehole/imgs/initBackground.jpg",
 	}
 	var stu model.StudentInfo
 	res := db.First(&stu, "student_number = ?", ctx.PostForm("student_number"))
 	if res.RowsAffected == 0 {
 		db.Create(&newStu)
 		ctx.JSON(http.StatusOK, gin.H{
-			"respMessage": "success",
+			"avatarURL":     newStu.AvatarURL,
+			"backgroundURL": newStu.BackgroundURL,
+			"respMessage":   "success",
 		})
 	} else {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"respMessage": "fail",
+			"avatarURL":     "",
+			"backgroundURL": "",
+			"respMessage":   "fail",
 		})
 	}
 }
@@ -35,36 +40,105 @@ func Login(ctx *gin.Context) {
 	res := db.First(&stu, "student_number = ?", ctx.PostForm("student_number"))
 	if res.RowsAffected == 1 && stu.Password == ctx.PostForm("password") {
 		ctx.JSON(http.StatusOK, gin.H{
-			"avatorURL":   stu.AvatorURL,
-			"respMessage": "success",
+			"avatarURL":     stu.AvatarURL,
+			"backgroundURL": stu.BackgroundURL,
+			"respMessage":   "success",
 		})
 	} else {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"avatorURL":   "",
-			"respMessage": "fail",
+			"avatarURL":     "",
+			"backgroundURL": "",
+			"respMessage":   "fail",
 		})
 	}
 }
 
-func UploadAvator(ctx *gin.Context) {
-	avator, err := ctx.FormFile("avator")
+func UploadAvatar(ctx *gin.Context) {
+	avatar, err := ctx.FormFile("avatar")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"avatorURL":   "",
+			"avatarURL":   "",
 			"respMessage": "fail",
 		})
 	} else {
-		stuNum := ctx.PostForm("studentNumber")
-		filepath := "../imgs/avator_" + stuNum + ".jpg"
-		avator_url := "http://localhost:8080/imgs/avator_" + stuNum + ".jpg"
-		ctx.SaveUploadedFile(avator, filepath)
+		stuNum := ctx.PostForm("student_number")
+		filepath := "../imgs/avatar_" + stuNum + ".jpg"
+		avatar_url := "http://localhost:8081/treehole/imgs/avatar_" + stuNum + ".jpg"
+		ctx.SaveUploadedFile(avatar, filepath)
 
 		db := common.GetDB()
-		db.Model(&model.StudentInfo{}).Where("student_number = ?", stuNum).Update("avator_url", avator_url)
+		db.Model(&model.StudentInfo{}).Where("student_number = ?", stuNum).Update("avatar_url", avatar_url)
 
 		ctx.JSON(http.StatusOK, gin.H{
-			"avatorURL":   avator_url,
+			"avatarURL":   avatar_url,
 			"respMessage": "success",
+		})
+	}
+}
+
+func UploadBackground(ctx *gin.Context) {
+	avatar, err := ctx.FormFile("avatar")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"backgroundURL": "",
+			"respMessage":   "fail",
+		})
+	} else {
+		stuNum := ctx.PostForm("student_number")
+		filepath := "../imgs/background_" + stuNum + ".jpg"
+		background_url := "http://localhost:8081/treehole/imgs/background_" + stuNum + ".jpg"
+		ctx.SaveUploadedFile(avatar, filepath)
+
+		db := common.GetDB()
+		db.Model(&model.StudentInfo{}).Where("student_number = ?", stuNum).Update("background_url", background_url)
+
+		ctx.JSON(http.StatusOK, gin.H{
+			"avatarURL":   background_url,
+			"respMessage": "success",
+		})
+	}
+}
+
+func ChangePassword(ctx *gin.Context) {
+	db := common.GetDB()
+	stuNum := ctx.PostForm("student_number")
+	confirmPassword := ctx.PostForm("confirmPassword")
+	newPassword := ctx.PostForm("newPassword")
+
+	user := model.StudentInfo{
+		StudentNumber: stuNum,
+	}
+	result := db.First(&user)
+	if result.Error != nil || user.Password != confirmPassword {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"respMessage": "fail",
+		})
+	} else {
+		db.Model(&model.StudentInfo{}).Where("student_number = ?", stuNum).Update("password", newPassword)
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"respMessage": "success",
+		})
+	}
+}
+
+func QueryStudentInfo(ctx *gin.Context) {
+	db := common.GetDB()
+	stuNum := ctx.PostForm("student_number")
+
+	user := model.StudentInfo{
+		StudentNumber: stuNum,
+	}
+	result := db.First(&user)
+
+	if result.Error != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"respMessage": "fail",
+		})
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{
+			"avatarURL":     user.AvatarURL,
+			"backgroundURL": user.BackgroundURL,
+			"respMessage":   "success",
 		})
 	}
 }
