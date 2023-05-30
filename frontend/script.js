@@ -11,7 +11,7 @@ function open_mainpage() {
 	document.getElementsByClassName("login_or_signup")[0].style.display =
 		"none";
 	document.getElementsByClassName("navigator")[0].style.display = "block";
-	document.getElementsByClassName("post_items")[0].style.display = "block";
+	document.getElementsById("post_items")[0].style.display = "block";
 }
 
 //退出登录，关闭主页、顶部导航栏和侧边栏，显示登录/注册界面
@@ -19,7 +19,7 @@ function logout() {
 	document.getElementsByClassName("login_or_signup")[0].style.display =
 		"block";
 	document.getElementsByClassName("navigator")[0].style.display = "none";
-	document.getElementsByClassName("post_items")[0].style.display = "none";
+	document.getElementsById("post_items")[0].style.display = "none";
 	close_sidebar();
 }
 
@@ -27,6 +27,8 @@ function logout() {
 
 let start_index = 1
 let post_num = 10
+let avatar_url = ""
+
 
 function formatUnixTime(unixTimestamp) {
 	const dateObj = new Date(unixTimestamp * 1000); // 将秒数转化为毫秒数
@@ -65,6 +67,7 @@ function init() {
 		.then((response) => {
 			let backgroundURL = response.data.backgroundURL;
 			console.log(backgroundURL);
+			avatar_url = response.data.avatarURL;
 			document.body.style.backgroundImage = `url(${backgroundURL})`;
 		}).catch((error) => {
 			console.error(error);
@@ -77,10 +80,13 @@ function init() {
 			let post_items = document.getElementById("post_items");
 			console.log(post_list)
 			for(let i=0;i<post_list.length;++i){
+				let content = document.createElement("div");
+				content.setAttribute("class","item");
+
 				let post_id = document.createElement("span");
 				post_id.setAttribute("class","post_id");
-				post_id.innerHTML = post_list[i].postId;
-				post_items.appendChild(post_id)
+				post_id.innerHTML = "#" + post_list[i].postId;
+				content.appendChild(post_id)
 
 				let is_favour = document.createElement("span");
 				is_favour.setAttribute("class","isfavored");
@@ -89,35 +95,47 @@ function init() {
 				}else{
 					is_favour.innerHTML = "未收藏"//未收藏的图标
 				}
-				post_items.appendChild(is_favour)
+				content.appendChild(is_favour)
 
 				let post_time = document.createElement("span");
-				post_time.setAttribute("class","post_id");
+				post_time.setAttribute("class","post_time");
 				post_time.innerHTML = formatUnixTime(post_list[i].sendTime);
-				post_items.appendChild(post_time)
+				content.appendChild(post_time)
 
-				let content = document.createElement("div");
-				content.setAttribute("class","item");
+				let sub_content = document.createElement("div");
+				sub_content.setAttribute("class","sub_content");
+
 				let post_content = document.createElement("span");
 				post_content.setAttribute("class","host_element");
 				post_content.innerHTML = post_list[i].content;
-				content.appendChild(post_content);
+				sub_content.appendChild(post_content);
+
+				let sub_img = document.createElement("img");
+				sub_img.setAttribute("class","host_head_icon");
+				sub_img.src = avatar_url;
+
+				let comment_list = document.createElement("ul");
+				comment_list.setAttribute("class","comment_element");
 				for(let j=0;j<post_list[i].CommentList.length;++j){
-					let comment = document.createElement("span");
-					comment.setAttribute("class","comment_element");
+					let comment = document.createElement("li");
+					comment.setAttribute("class","comment_preview");
 					comment.innerHTML = post_list[i].CommentList[j].content;
-					content.appendChild(comment);
+					comment_list.appendChild(comment);
+				}
+				sub_content.appendChild(comment_list);
+				content.appendChild(sub_content);
+				content.onclick = function(){
+					open_post(post_list[i].postId);
 				}
 				post_items.appendChild(content);
 			}
-
 //`````````````………………………………………………………………………………………………………………………………………………………………………………
 
 		}).catch((error) => {
 			console.error(error);
 		});
 }
-// init();
+init();
 
 //打开侧边栏和遮罩层
 function open_sidebar() {
@@ -330,6 +348,7 @@ function call_account_page() {
 	axios
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
+			avatar_url = response.data.avatarURL;
 			let avatarURL = response.data.avatarURL;
 			console.log("Avatar URL:", avatarURL);
 			//将avatar的src属性设置为avatarURL
@@ -339,7 +358,6 @@ function call_account_page() {
 			console.error(error);
 		});
 }
-
 //打开某条树洞（未完待续）
 function open_post(post_number) {
 	//树洞号
@@ -350,23 +368,66 @@ function open_post(post_number) {
 	document.getElementById("details").style.display = "block";
 	//向后端请求内容
 	axios
-		.post("user/querySinglePost", { post_number: post_number })
+		.post("treehole/querySinglePost", {student_number:id ,postId: post_number})
 		.then((response) => {
+			let detailed_content = document.getElementById("detailed_content");
+			let comment_list = response.data.singlePost.CommentList;
+			
+			let detailed_item = document.createElement("li");
 
+			let post_id = document.createElement("span");
+			post_id.setAttribute("class","post_id");
+			post_id.innerHTML = "#" + response.data.singlePost.postId;
+			detailed_item.appendChild(post_id)
 
+			let post_time = document.createElement("span");
+			post_time.setAttribute("class","post_time");
+			post_time.innerHTML = formatUnixTime(response.data.singlePost.sendTime);
+			detailed_item.appendChild(post_time)
 
+			let sub_item = document.createElement("div");
 
+			let sub_img = document.createElement("img");
+			sub_img.setAttribute("class","host_head_icon");
+			sub_img.src = avatar_url;
+			sub_item.appendChild(sub_img);
 
+			let sub_content = document.createElement("span");
+			sub_content.setAttribute("class","detailed_text");
+			sub_content.innerHTML = response.data.singlePost.content;
+			sub_item.appendChild(sub_content);
 
+			detailed_item.appendChild(sub_item);
+			detailed_content.appendChild(detailed_item);
 
+			for(let i=0;i<comment_list.length;++i){
+				let detailed_item = document.createElement("li");
 
-
-
-
-
-
-
-
+				let post_id = document.createElement("span");
+				post_id.setAttribute("class","post_id");
+				post_id.innerHTML = "#" + comment_list[i].commentId;
+				detailed_item.appendChild(post_id)
+	
+				let post_time = document.createElement("span");
+				post_time.setAttribute("class","post_time");
+				post_time.innerHTML = formatUnixTime(comment_list[i].sendTime);
+				detailed_item.appendChild(post_time)
+	
+				let sub_item = document.createElement("div");
+	
+				// let sub_img = document.createElement("img");
+				// sub_img.setAttribute("class","host_head_icon");
+				// sub_img.src = avatar_url;
+				// sub_item.appendChild(sub_img);
+	
+				let sub_content = document.createElement("span");
+				sub_content.setAttribute("class","detailed_text");
+				sub_content.innerHTML = comment_list[i].content;
+				sub_item.appendChild(sub_content);
+	
+				detailed_item.appendChild(sub_item);
+				detailed_content.appendChild(detailed_item);
+			}
 		}).catch((error) => {
 			console.error(error);
 		});
