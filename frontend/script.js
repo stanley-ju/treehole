@@ -23,8 +23,6 @@ function logout() {
 	close_sidebar();
 }
 
-let start_index = 1
-let post_num = 10
 //每次刷新页面，加载背景，主页请求帖子
 
 let start_index = 1
@@ -73,16 +71,11 @@ function init() {
 		});
 	//主页请求帖子
 	axios
-<<<<<<< HEAD
 		.post("treehole/queryPost", { student_number: id ,startIndex:start_index,postNum:post_num})
-=======
-		.post("user/queryPost", { "student_number": id ,"startIndex": start_index, "postNum":postNum})
->>>>>>> 0abff33dd9bb65baa8ac134d08e3086b54f1d942
 		.then((response) => {
 			let post_list = response.data.postList;
 			let post_items = document.getElementById("post_items");
 			console.log(post_list)
-<<<<<<< HEAD
 			for(let i=0;i<post_list.length;++i){
 				let post_id = document.createElement("span");
 				post_id.setAttribute("class","post_id");
@@ -117,13 +110,6 @@ function init() {
 				}
 				post_items.appendChild(content);
 			}
-=======
-
-
-
-
-
->>>>>>> 0abff33dd9bb65baa8ac134d08e3086b54f1d942
 
 //`````````````………………………………………………………………………………………………………………………………………………………………………………
 
@@ -131,12 +117,7 @@ function init() {
 			console.error(error);
 		});
 }
-<<<<<<< HEAD
-
-init();
-=======
 // init();
->>>>>>> 0abff33dd9bb65baa8ac134d08e3086b54f1d942
 
 //打开侧边栏和遮罩层
 function open_sidebar() {
