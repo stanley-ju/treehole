@@ -77,7 +77,7 @@ func UploadAvatar(ctx *gin.Context) {
 }
 
 func UploadBackground(ctx *gin.Context) {
-	avatar, err := ctx.FormFile("avatar")
+	avatar, err := ctx.FormFile("background")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"backgroundURL": "",

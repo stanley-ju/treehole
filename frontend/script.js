@@ -574,6 +574,27 @@ function submit_post() {
 		});
 }
 
+let reply_id = -1;
+let reply_status = 0;
+
+function switch_reply_status(comment_id){
+	if(reply_status == 0){
+		reply_id = comment_id;
+		reply_status = 1;
+	}else{
+		if(reply_id == comment_id){
+			reply_id = -1;
+			reply_status = 0;
+		}else{
+			reply_id = comment_id;
+		}
+	}
+
+	if(reply_status==1){
+		//将RE span改成可见的
+	}
+}
+
 //发评论
 function submit_comment() {
 	let input = document.getElementById("comment_input");
