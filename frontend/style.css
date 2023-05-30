@@ -177,6 +177,7 @@ body {
 	background-color: #916868;
 	padding:2px 2px 2px 2px;
 	
+<<<<<<< HEAD
 }
 	/*发言和评论条目*/
 .detailed_item{
@@ -190,6 +191,21 @@ body {
 .detailed_item > div{
 	background-color: #9e2121;
 }
+=======
+}
+	/*发言和评论条目*/
+.detailed_item{
+	position: relative;
+	background-color: #791d1d;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+	height: auto;
+}
+.detailed_item > div{
+	background-color: #9e2121;
+}
+>>>>>>> 0abff33dd9bb65baa8ac134d08e3086b54f1d942
 
 
 
@@ -263,4 +279,8 @@ body {
 /*边栏-todolist~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .sidebar #todolist {
 	display: none;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0abff33dd9bb65baa8ac134d08e3086b54f1d942
