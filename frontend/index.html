@@ -68,6 +68,13 @@
             
         </div>
 
+        
+        
+
+
+
+        
+
     </div>
     <!--占页面右边一半的侧栏-->
     <div class="sidebar">
@@ -78,7 +85,6 @@
             <span class="sidebar_buttons">
                 <!--刷新、逆序、收藏3个按钮-->
                 <button id="refresh" onclick="refresh()">刷新</button>
-                <button id="reverse" onclick="reverse()">逆序</button>
                 <button id="collect" onclick="collect()">收藏</button>
             </span>
         </div>
@@ -94,13 +100,16 @@
                     <!--内容-->
                     <div>
                         <img class="host_head_icon" src="" alt="头像">
-                        <span class="detailed_text">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum<span>
+                        <span class="quote">
+
+                        </span>
+                        <span class="detailed_text">
+                            Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                        </span>
                     </div>
                 </li>
-
-                
             </ul>
-            
+            <div class="reply_item">reply: id</div>
             <!--评论编辑输入框-->
             <div id="comment">
                 <textarea name="comment" id="comment_input"></textarea>
@@ -152,9 +161,15 @@
             <button id="post_submit" onclick="submit_post()">提交</button>
         </div>
         <!--todolist-->
-        <div class="sidebar_content" id="todolist">
-
-        </div>
+        <ul class="sidebar_content" id="todolist">
+            <li id="hide_todo">
+                <!--存储该条目的优先级，但不显示-->
+                <span class="priority" style.display="none"></span>
+                <!--完成，置顶按钮-->
+                <button class="todo_complete" onclick="complete()">完成</button>
+                <button class="todo_top" onclick="top()">置顶</button>
+            </li>
+        </ul>
     </div>
     <!--占页面左边一半的遮罩层-->
     <div class="mask"></div>
