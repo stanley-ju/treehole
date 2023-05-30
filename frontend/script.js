@@ -1,5 +1,5 @@
 "use strict";
-var id = "";
+var id = "1919810996"; //等会修改成从后端获取的id
 //axios的配置
 axios.defaults.baseURL = "http://localhost:8080/";
 var qs = Qs;
@@ -23,11 +23,13 @@ function logout() {
 	close_sidebar();
 }
 
+let start_index = 1
+let post_num = 10
 //每次刷新页面，加载背景，主页请求帖子
 function init() {
 	//从cookie中获取学号，如果过期，则跳转到登录界面
-	id = document.cookie.split(";")[0].split("=")[1];	
-	if (id == "") {
+	id = document.cookie;
+	if (document.cookie == "") {
 		logout();
 		return;
 	}
@@ -36,16 +38,17 @@ function init() {
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
 			let backgroundURL = response.data.backgroundURL;
-			console.log(backgroundURL);
 			document.body.style.backgroundImage = `url(${backgroundURL})`;
 		}).catch((error) => {
 			console.error(error);
 		});
 	//主页请求帖子
 	axios
-		.post("user/queryPost", { student_number: id })
+		.post("user/queryPost", { "student_number": id ,"startIndex": start_index, "postNum":postNum})
 		.then((response) => {
-
+			let post_list = response.data.postList;
+			let post_items = document.getElementById("post_items");
+			console.log(post_list)
 
 
 
@@ -64,7 +67,7 @@ function init() {
 			console.error(error);
 		});
 }
-init();
+// init();
 
 //打开侧边栏和遮罩层
 function open_sidebar() {
@@ -109,6 +112,7 @@ turn_to_login_or_signup.onclick = function () {
 
 //登录/注册
 function login_or_signup() {
+	//flag = "login"/"register"
 	let button = document.getElementById("login_or_signup_button");
 	let flag = button.innerHTML == "登录" ? "login" : "signup";
 	let num = document.getElementById("stu_number"); //num.value是个字符串，所以无需转化
@@ -129,8 +133,7 @@ function login_or_signup() {
 				resolve("done");
 				//缓存学号，用cookie
 				id = num.value;
-				document.cookie = "id=" + id + "; expires=" + new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
-				init();
+				document.cookie = id;
 			}).catch((error) => {
 				alert(error);
 				reject(error);
@@ -352,8 +355,16 @@ function collect() {
 	let collect = document.getElementById("collect");
 	if (collect.innerHTML == "收藏") {
 		collect.innerHTML = "已收藏";
+		//向后端发东西
+
+
+
 	} else if (collect.innerHTML == "已收藏") {
 		collect.innerHTML = "收藏";
+		//向后端发东西
+
+
+		
 	}
 }
 
