@@ -371,6 +371,9 @@ function open_post(post_number) {
 		.post("treehole/querySinglePost", {student_number:id ,postId: post_number})
 		.then((response) => {
 			let detailed_content = document.getElementById("detailed_content");
+			while (detailed_content.firstChild) { // 不断遍历子节点列表直到为空
+				detailed_content.removeChild(detailed_content.firstChild); // 删除第一个子节点
+			}
 			let comment_list = response.data.singlePost.CommentList;
 			
 			let detailed_item = document.createElement("li");
