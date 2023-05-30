@@ -92,7 +92,9 @@ function queryPost(){
 					}
 					post_items.appendChild(content);
 				}
-				start_index += post_num;
+
+				start_index += post_list.length;
+
 				resolve("done");
 			}).catch((error) => {
 				console.error(error);
@@ -125,6 +127,18 @@ function formatUnixTime(unixTimestamp) {
 	result += `${seconds} 秒前`;
 	
 	return result;
+}
+
+function scroll_bottom() {
+	const scrollHeight = document.body.scrollHeight;
+	const scrollTop = document.body.scrollTop;
+	const clientHeight = document.body.clientHeight;
+	console.log(scrollHeight,scrollTop,clientHeight);
+	if (scrollHeight - scrollTop == clientHeight+1) {
+	  // 已经滚动到了页面底部，执行相应的操作
+	  console.log("已经滚动到了页面底部！");
+	  query_more();
+	}
   }
 
 function init() {
@@ -153,19 +167,10 @@ function init() {
 	start_index = 1;
 	search_start_index = 1;
 	is_searching = 0;
+	document.body.scrollTop = 0;
 	queryPost();
 
-	document.body.addEventListener("scroll", function() {
-		const scrollHeight = document.body.scrollHeight;
-		const scrollTop = document.body.scrollTop;
-		const clientHeight = document.body.clientHeight;
-	  
-		if (scrollHeight - scrollTop === clientHeight) {
-		  // 已经滚动到了页面底部，执行相应的操作
-		  console.log("已经滚动到了页面底部！");
-		  query_more();
-		}
-	  });
+	document.body.addEventListener("scroll", scroll_bottom);
 }
 init();
 
@@ -248,8 +253,7 @@ function change_password() {
 	let old_psw = document.getElementById("old_password");
 	let new_psw = document.getElementById("new_password");
 	return new Promise((resolve, reject) => {
-		axios
-			.post(
+		axios.post("user/changePassword",
 				qs.stringify({
 					student_number: id,
 					student_number: old_psw.value,
@@ -324,7 +328,9 @@ function queryPostWithKeyword(){
 					}
 					post_items.appendChild(content);
 				}
-				search_start_index += search_post_num;
+
+					search_start_index += post_list.length;
+
 				resolve("done");
 			}).catch((error) => {
 				console.error(error);
@@ -345,10 +351,13 @@ function search() {
 	is_searching = 1;
 	close_sidebar();
 	let post_items = document.getElementById("post_items");
+	document.body.removeEventListener("scroll",scroll_bottom());
 	while (post_items.firstChild) { // 不断遍历子节点列表直到为空
 		post_items.removeChild(post_items.firstChild); // 删除第一个子节点
 	}                 
 	queryPostWithKeyword();
+	document.body.scrollTop = 0;
+	document.body.addEventListener("scroll", scroll_bottom);
 }
 
 function query_more(){
@@ -451,9 +460,15 @@ function open_post(post_number) {
 	document.getElementById("details").style.display = "block";
 
 	//向后端请求内容
-	axios
-		.post("treehole/querySinglePost", {student_number:id ,postId: post_number})
+	axios.post("treehole/querySinglePost", {student_number:id ,postId: post_number})
 		.then((response) => {
+			let collect = document.getElementById("collect");
+			if(response.data.singlePost.isFavour=="true"){
+				collect.innerHTML = "已收藏";
+			}else{
+				collect.innerHTML = "收藏";
+			}
+
 			let detailed_content = document.getElementById("detailed_content");
 			while (detailed_content.firstChild) { // 不断遍历子节点列表直到为空
 				detailed_content.removeChild(detailed_content.firstChild); // 删除第一个子节点
@@ -564,15 +579,35 @@ function collect() {
 	if (collect.innerHTML == "收藏") {
 		collect.innerHTML = "已收藏";
 		//向后端发东西
-
-
-
+		return new Promise((resolve, reject) => {
+			axios.post("treehole/favoritePost",
+					qs.stringify({
+						student_number:id,
+						postId:cur_detail_post,
+					})
+				).then((response) => {
+					console.log(response);
+					resolve("done");
+				}).catch((error) => {
+					reject(error);
+				});
+		});
 	} else if (collect.innerHTML == "已收藏") {
 		collect.innerHTML = "收藏";
 		//向后端发东西
-
-
-		
+		return new Promise((resolve, reject) => {
+			axios.post("treehole/cancelFavoritePost",
+					qs.stringify({
+						student_number:id,
+						postId:cur_detail_post,
+					})
+				).then((response) => {
+					console.log(response);
+					resolve("done");
+				}).catch((error) => {
+					reject(error);
+				});
+		});
 	}
 }
 
