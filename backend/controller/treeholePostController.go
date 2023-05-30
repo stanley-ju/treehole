@@ -116,7 +116,7 @@ func QueryPost(ctx *gin.Context) {
 	startIndex, _ := strconv.Atoi(ctx.PostForm("startIndex"))
 	studentNumber := ctx.PostForm("student_number")
 	postNum, _ := strconv.Atoi(ctx.PostForm("postNum"))
-	result := db.Order("id desc").Limit(postNum).Offset(startIndex).Find(&treeholePosts)
+	result := db.Order("id desc").Limit(postNum).Offset(startIndex - 1).Find(&treeholePosts)
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"respMessage": "fail",
@@ -244,7 +244,7 @@ func QueryPostWithKeyword(ctx *gin.Context) {
 	postNum, _ := strconv.Atoi(ctx.PostForm("postNum"))
 	studentNumber := ctx.PostForm("student_number")
 	keyword := ctx.PostForm("keyword")
-	result := db.Where("content like ?", "%"+keyword+"%").Order("id desc").Limit(postNum).Offset(startIndex).Find(&treeholePosts)
+	result := db.Where("content like ?", "%"+keyword+"%").Order("id desc").Limit(postNum).Offset(startIndex - 1).Find(&treeholePosts)
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"respMessage": "fail",

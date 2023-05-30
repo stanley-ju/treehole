@@ -12,7 +12,7 @@ function open_mainpage() {
 	document.getElementsByClassName("login_or_signup")[0].style.display =
 		"none";
 	document.getElementsByClassName("navigator")[0].style.display = "block";
-	document.getElementsById("post_items")[0].style.display = "block";
+	document.getElementById("post_items").style.display = "block";
 }
 
 //退出登录，关闭主页、顶部导航栏和侧边栏，显示登录/注册界面
@@ -20,15 +20,86 @@ function logout() {
 	document.getElementsByClassName("login_or_signup")[0].style.display =
 		"block";
 	document.getElementsByClassName("navigator")[0].style.display = "none";
-	document.getElementsById("post_items")[0].style.display = "none";
+	document.getElementById("post_items").style.display = "none";
 	close_sidebar();
 }
 
 //每次刷新页面，加载背景，主页请求帖子
 
 let start_index = 1
-let post_num = 10
+let search_start_index = 1
+let post_num = 20
+let search_post_num = 20
 let avatar_url = ""
+let search_keyword = ""
+let is_searching = 0
+
+function queryPost(){
+	return new Promise((resolve, reject) => {
+		axios.post("treehole/queryPost", { 
+			student_number: id ,startIndex:start_index,postNum:post_num
+		}).then((response) => {
+				let post_list = response.data.postList;
+				let post_items = document.getElementById("post_items");
+				console.log(post_list)
+				for(let i=0;i<post_list.length;++i){
+					let content = document.createElement("div");
+					content.setAttribute("class","item");
+	
+					let post_id = document.createElement("span");
+					post_id.setAttribute("class","post_id");
+					post_id.innerHTML = "#" + post_list[i].postId;
+					content.appendChild(post_id)
+	
+					let is_favour = document.createElement("span");
+					is_favour.setAttribute("class","isfavored");
+					if(post_list[i].isFavour == "true"){
+						is_favour.innerHTML = "已收藏"//收藏的图标
+					}else{
+						is_favour.innerHTML = "未收藏"//未收藏的图标
+					}
+					content.appendChild(is_favour)
+	
+					let post_time = document.createElement("span");
+					post_time.setAttribute("class","post_time");
+					post_time.innerHTML = formatUnixTime(post_list[i].sendTime);
+					content.appendChild(post_time)
+	
+					let sub_content = document.createElement("div");
+					sub_content.setAttribute("class","sub_content");
+	
+					let post_content = document.createElement("span");
+					post_content.setAttribute("class","host_element");
+					post_content.innerHTML = post_list[i].content;
+					sub_content.appendChild(post_content);
+	
+					let sub_img = document.createElement("img");
+					sub_img.setAttribute("class","host_head_icon");
+					sub_img.src = avatar_url;
+	
+					let comment_list = document.createElement("ul");
+					comment_list.setAttribute("class","comment_element");
+					for(let j=0;j<post_list[i].CommentList.length;++j){
+						let comment = document.createElement("li");
+						comment.setAttribute("class","comment_preview");
+						comment.innerHTML = post_list[i].CommentList[j].content;
+						comment_list.appendChild(comment);
+					}
+					sub_content.appendChild(comment_list);
+					content.appendChild(sub_content);
+					content.onclick = function(){
+						open_post(post_list[i].postId);
+					}
+					post_items.appendChild(content);
+				}
+				start_index += post_num;
+				resolve("done");
+			}).catch((error) => {
+				console.error(error);
+				reject(error);
+			});
+	});
+}
 
 
 function formatUnixTime(unixTimestamp) {
@@ -79,70 +150,19 @@ function init() {
 			console.error(error);
 		});
 	//主页请求帖子
-	axios
-		.post("treehole/queryPost", { student_number: id ,startIndex:start_index,postNum:post_num})
-		.then((response) => {
-			let post_list = response.data.postList;
-			let post_items = document.getElementById("post_items");
-			console.log(post_list)
-			for(let i=0;i<post_list.length;++i){
-				let content = document.createElement("div");
-				content.setAttribute("class","item");
-
-				let post_id = document.createElement("span");
-				post_id.setAttribute("class","post_id");
-				post_id.innerHTML = "#" + post_list[i].postId;
-				content.appendChild(post_id)
-
-				let is_favour = document.createElement("span");
-				is_favour.setAttribute("class","isfavored");
-				if(post_list[i].isFavour == "true"){
-					is_favour.innerHTML = "已收藏"//收藏的图标
-				}else{
-					is_favour.innerHTML = "未收藏"//未收藏的图标
-				}
-				content.appendChild(is_favour)
-
-				let post_time = document.createElement("span");
-				post_time.setAttribute("class","post_time");
-				post_time.innerHTML = formatUnixTime(post_list[i].sendTime);
-				content.appendChild(post_time)
-
-				let sub_content = document.createElement("div");
-				sub_content.setAttribute("class","sub_content");
-
-				let post_content = document.createElement("span");
-				post_content.setAttribute("class","host_element");
-				post_content.innerHTML = post_list[i].content;
-				sub_content.appendChild(post_content);
-
-				let sub_img = document.createElement("img");
-				sub_img.setAttribute("class","host_head_icon");
-				sub_img.src = avatar_url;
-
-				let comment_list = document.createElement("ul");
-				comment_list.setAttribute("class","comment_element");
-				for(let j=0;j<post_list[i].CommentList.length;++j){
-					let comment = document.createElement("li");
-					comment.setAttribute("class","comment_preview");
-					comment.innerHTML = post_list[i].CommentList[j].content;
-					comment_list.appendChild(comment);
-				}
-				sub_content.appendChild(comment_list);
-				content.appendChild(sub_content);
-				content.onclick = function(){
-					open_post(post_list[i].postId);
-				}
-				post_items.appendChild(content);
-			}
-//`````````````………………………………………………………………………………………………………………………………………………………………………………
-
-		}).catch((error) => {
-			console.error(error);
-		});
+	start_index = 1;
+	search_start_index = 1;
+	is_searching = 0;
+	queryPost();
 }
 init();
-
+let postItems = document.getElementById("post_items");
+postItems.addEventListener("scroll", function () {
+// 检查元素是否已滚动到底部
+console.log(postItems.scrollTop,postItems.clientHeight,postItems.scrollHeight)
+if (postItems.scrollTop + postItems.clientHeight == postItems.scrollHeight)
+	query_more();
+});
 //打开侧边栏和遮罩层
 function open_sidebar() {
 	document.getElementsByClassName("mask")[0].style.display = "block";
@@ -240,48 +260,99 @@ function change_password() {
 	});
 }
 
-//导航栏的搜索，发洞，收藏，待办，账户按钮
-//搜索（不确定）
-function search() {
-	let search_content = document.getElementById("search").value;
-	close_sidebar();
+function queryPostWithKeyword(){
 	return new Promise((resolve, reject) => {
-		axios
-			.post(
-				qs.stringify({
-					content: search_content,
-				})
-			)
-			.then((response) => {
-				console.log(response);
-				//从后端返回？刷新？还不晓得怎么写捏
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		axios.post("treehole/queryPostWithKeyword", { 
+			student_number: id ,startIndex:search_start_index,postNum:search_post_num,keyword:search_keyword,
+		}).then((response) => {
+				let post_list = response.data.postList;
+				let post_items = document.getElementById("post_items");
+				console.log(post_list)
+				for(let i=0;i<post_list.length;++i){
+					let content = document.createElement("div");
+					content.setAttribute("class","item");
+	
+					let post_id = document.createElement("span");
+					post_id.setAttribute("class","post_id");
+					post_id.innerHTML = "#" + post_list[i].postId;
+					content.appendChild(post_id)
+	
+					let is_favour = document.createElement("span");
+					is_favour.setAttribute("class","isfavored");
+					if(post_list[i].isFavour == "true"){
+						is_favour.innerHTML = "已收藏"//收藏的图标
+					}else{
+						is_favour.innerHTML = "未收藏"//未收藏的图标
+					}
+					content.appendChild(is_favour)
+	
+					let post_time = document.createElement("span");
+					post_time.setAttribute("class","post_time");
+					post_time.innerHTML = formatUnixTime(post_list[i].sendTime);
+					content.appendChild(post_time)
+	
+					let sub_content = document.createElement("div");
+					sub_content.setAttribute("class","sub_content");
+	
+					let post_content = document.createElement("span");
+					post_content.setAttribute("class","host_element");
+					post_content.innerHTML = post_list[i].content;
+					sub_content.appendChild(post_content);
+	
+					let sub_img = document.createElement("img");
+					sub_img.setAttribute("class","host_head_icon");
+					sub_img.src = avatar_url;
+	
+					let comment_list = document.createElement("ul");
+					comment_list.setAttribute("class","comment_element");
+					for(let j=0;j<post_list[i].CommentList.length;++j){
+						let comment = document.createElement("li");
+						comment.setAttribute("class","comment_preview");
+						comment.innerHTML = post_list[i].CommentList[j].content;
+						comment_list.appendChild(comment);
+					}
+					sub_content.appendChild(comment_list);
+					content.appendChild(sub_content);
+					content.onclick = function(){
+						open_post(post_list[i].postId);
+					}
+					post_items.appendChild(content);
+				}
+				search_start_index += search_post_num;
 				resolve("done");
-			})
-			.catch((error) => {
-				//搜索应该只有“搜索为空”这种error，再不还有个“过长”的error
-				alert(error);
+			}).catch((error) => {
+				console.error(error);
 				reject(error);
 			});
 	});
 }
+
+//导航栏的搜索，发洞，收藏，待办，账户按钮
+//搜索（不确定）
+function search() {
+	search_keyword = document.getElementById("search").value;
+	if(search_keyword == "") {
+		alert("搜索内容不能为空！");
+		return;
+	}
+	search_start_index = 1;
+	is_searching = 1;
+	close_sidebar();
+	let post_items = document.getElementById("post_items");
+	while (post_items.firstChild) { // 不断遍历子节点列表直到为空
+		post_items.removeChild(post_items.firstChild); // 删除第一个子节点
+	}                 
+	queryPostWithKeyword();
+}
+
+function query_more(){
+	if(is_searching == 0){
+		queryPost();
+	}else{
+		queryPostWithKeyword();
+	}
+}                                            
+
 //调出发洞页面
 function call_post_page() {
 	close_sidebar();
@@ -372,6 +443,7 @@ function open_post(post_number) {
 	document.getElementsByClassName("sidebar_buttons")[0].style.display =
 		"inline";
 	document.getElementById("details").style.display = "block";
+
 	//向后端请求内容
 	axios
 		.post("treehole/querySinglePost", {student_number:id ,postId: post_number})
@@ -423,11 +495,16 @@ function open_post(post_number) {
 				detailed_item.appendChild(post_time)
 	
 				let sub_item = document.createElement("div");
-	
-				// let sub_img = document.createElement("img");
-				// sub_img.setAttribute("class","host_head_icon");
-				// sub_img.src = avatar_url;
-				// sub_item.appendChild(sub_img);
+
+				let sub_img = document.createElement("img");
+				sub_img.setAttribute("class","host_head_icon");
+				axios.post("user/queryStudentInfo", { student_number: comment_list[i].senderId })
+				.then((response) => {
+					sub_img.src = response.data.avatarURL;
+				}).catch((error) => {
+					console.error(error);
+				});
+				sub_item.appendChild(sub_img);
 	
 				let sub_content = document.createElement("span");
 				sub_content.setAttribute("class","detailed_text");

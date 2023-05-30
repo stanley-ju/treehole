@@ -30,8 +30,10 @@
     <div class="navigator">
         <div>P大树洞</div>   
         <div>
+            <!-- 刷新按钮 -->
+            <button class="refresh" onclick="location.reload()">刷新</button>
             <!--搜索框和搜索键-->
-            <input type="text" name="search" placeholder="搜索" id="search">
+            <input type="text" name="search" onclick="close_sidebar()" placeholder="搜索" id="search">
             <button class="search" onclick="search()">搜索</button>
             <!--呼出发帖页-->
             <button class="call_post_page" onclick="call_post_page()">发洞</button>
