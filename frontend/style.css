@@ -51,16 +51,64 @@ body {
 }
 
 /*主页树洞条目~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-.post_items {
+#post_items {
 	display: block;
-
-	background: #b11010;
+	background: #414141;
 	width: 80%;
 	height: auto;
 	left: 10%;
 	margin-left: 8%;
 	margin-right: 12%;
 }
+
+.item > div{
+
+}
+
+
+/*评论预览*/
+.comment_element{
+	display: inline;
+	background: #b11010;
+	height: auto;
+}
+.comment_element > li{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*左侧遮罩层*/
 .mask {
@@ -78,7 +126,7 @@ body {
  * 右侧边栏及各种内容~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 .sidebar {
-	/* display: none; ……………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………*/
+	display: none;
 	width: 50%;
 	height: calc(100% - 44.33px);
 	position: fixed;
@@ -120,12 +168,44 @@ body {
 .sidebar #details {
 	display: none;
 }
-/*发言和评论条目*/
+/*发言和评论条目所在的区域*/
 #detailed_content {
 	height: 88%;
 	margin: 0;
 	overflow: scroll;
+	list-style-type: none;
+	background-color: #916868;
+	padding:2px 2px 2px 2px;
+	
 }
+	/*发言和评论条目*/
+.detailed_item{
+	position: relative;
+	background-color: #791d1d;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+	height: auto;
+}
+.detailed_item > div{
+	background-color: #9e2121;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*输入*/
 .sidebar_content #comment {
 	height: 10%;
@@ -182,5 +262,5 @@ body {
 
 /*边栏-todolist~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .sidebar #todolist {
-	/* display: none; */
+	display: none;
 }
