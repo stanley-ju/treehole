@@ -17,6 +17,7 @@ type posts struct {
 	FavourNum   int    `json:"favourNum"`
 	Content     string `json:"content"`
 	QuoteId     int    `json:"quoteId"`
+	IsFavour    string `json:"isFavour"`
 	CommentList []comments
 }
 
@@ -29,7 +30,7 @@ type comments struct {
 	ReplyId   int    `json:"replyId"`
 }
 
-func convert_post(c model.TreeholePost) posts {
+func convert_post(c model.TreeholePost, studentNumber string) posts {
 	res := posts{}
 	res.PostId = int(c.ID)
 	res.SenderId = c.SenderId
@@ -42,6 +43,14 @@ func convert_post(c model.TreeholePost) posts {
 	db := common.GetDB()
 	Comments := []model.PostComment{}
 	db.Where("post_id = ?", res.PostId).Find(&Comments)
+
+	favour := model.FavourPost{}
+	result := db.Where("student_number = ? and post_id = ?", studentNumber, res.PostId).Find(&favour)
+	if result.RowsAffected == 0 {
+		res.IsFavour = "false"
+	} else {
+		res.IsFavour = "true"
+	}
 
 	for i := range Comments {
 		res.CommentList = append(res.CommentList, convert_comment(Comments[i]))
@@ -105,6 +114,7 @@ func QueryPost(ctx *gin.Context) {
 	treeholePosts := []model.TreeholePost{}
 	resp := []posts{}
 	startIndex, _ := strconv.Atoi(ctx.PostForm("startIndex"))
+	studentNumber := ctx.PostForm("student_number")
 	postNum, _ := strconv.Atoi(ctx.PostForm("postNum"))
 	result := db.Order("id desc").Limit(postNum).Offset(startIndex).Find(&treeholePosts)
 	if result.Error != nil {
@@ -114,7 +124,7 @@ func QueryPost(ctx *gin.Context) {
 		})
 	} else {
 		for i := range treeholePosts {
-			resp = append(resp, convert_post(treeholePosts[i]))
+			resp = append(resp, convert_post(treeholePosts[i], studentNumber))
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{
@@ -127,18 +137,19 @@ func QueryPost(ctx *gin.Context) {
 func QuerySinglePost(ctx *gin.Context) {
 	db := common.GetDB()
 	id := ctx.PostForm("postId")
+	studentNumber := ctx.PostForm("student_number")
 
 	singlePost := model.TreeholePost{}
 	result := db.Where("id = ?", id).Find(&singlePost)
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"respMessage": "fail",
-			"singlePost":  convert_post(singlePost),
+			"singlePost":  convert_post(singlePost, studentNumber),
 		})
 	} else {
 		ctx.JSON(http.StatusOK, gin.H{
 			"respMessage": "success",
-			"singlePost":  convert_post(singlePost),
+			"singlePost":  convert_post(singlePost, studentNumber),
 		})
 	}
 }
@@ -215,7 +226,7 @@ func QueryFavoritePost(ctx *gin.Context) {
 		})
 	} else {
 		for i := range favourPosts {
-			resp = append(resp, convert_post(favourPosts[i]))
+			resp = append(resp, convert_post(favourPosts[i], studentNumber))
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{
@@ -231,6 +242,7 @@ func QueryPostWithKeyword(ctx *gin.Context) {
 	resp := []posts{}
 	startIndex, _ := strconv.Atoi(ctx.PostForm("startIndex"))
 	postNum, _ := strconv.Atoi(ctx.PostForm("postNum"))
+	studentNumber := ctx.PostForm("student_number")
 	keyword := ctx.PostForm("keyword")
 	result := db.Where("content like ?", "%"+keyword+"%").Order("id desc").Limit(postNum).Offset(startIndex).Find(&treeholePosts)
 	if result.Error != nil {
@@ -240,7 +252,7 @@ func QueryPostWithKeyword(ctx *gin.Context) {
 		})
 	} else {
 		for i := range treeholePosts {
-			resp = append(resp, convert_post(treeholePosts[i]))
+			resp = append(resp, convert_post(treeholePosts[i], studentNumber))
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{

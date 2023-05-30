@@ -1,5 +1,5 @@
 "use strict";
-var id = "1919810996"; //等会修改成从后端获取的id
+var id = "1900012997"; //等会修改成从后端获取的id
 //axios的配置
 axios.defaults.baseURL = "http://localhost:8080/";
 var qs = Qs;
@@ -24,10 +24,38 @@ function logout() {
 }
 
 //每次刷新页面，加载背景，主页请求帖子
+
+let start_index = 1
+let post_num = 10
+
+function formatUnixTime(unixTimestamp) {
+	const dateObj = new Date(unixTimestamp * 1000); // 将秒数转化为毫秒数
+	const now = new Date(); // 当前时间
+  
+	// 计算相差的总秒数、总分钟数、总小时数和总天数
+	const diffSeconds = Math.floor((now - dateObj) / 1000);
+	const diffMinutes = Math.floor(diffSeconds / 60);
+	const diffHours = Math.floor(diffMinutes / 60);
+	const diffDays = Math.floor(diffHours / 24);
+  
+	// 判断输出内容
+	if (diffDays > 0) {
+	  return `${diffDays}天${diffHours % 24}小时${diffMinutes % 60}分钟前`;
+	} else if (diffHours > 0) {
+	  return `${diffHours}小时${diffMinutes % 60}分钟前`;
+	} else {
+	  return `${diffMinutes}分钟前`;
+	}
+  }
+
 function init() {
 	//从cookie中获取学号，如果过期，则跳转到登录界面
-	id = document.cookie;
-	if (document.cookie == "") {
+	// id = document.cookie;
+	id = document.cookie.replace(/(?:(?:^|.*;\s*)id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	console.log(document.cookie)
+	console.log(id)
+	if (id == "") {
+		console.log("quit")
 		logout();
 		return;
 	}
@@ -36,33 +64,60 @@ function init() {
 		.post("user/queryStudentInfo", { student_number: id })
 		.then((response) => {
 			let backgroundURL = response.data.backgroundURL;
+			console.log(backgroundURL);
 			document.body.style.backgroundImage = `url(${backgroundURL})`;
 		}).catch((error) => {
 			console.error(error);
 		});
 	//主页请求帖子
 	axios
-		.post("user/queryPost", { student_number: id })
+		.post("treehole/queryPost", { student_number: id ,startIndex:start_index,postNum:post_num})
 		.then((response) => {
+			let post_list = response.data.postList;
+			let post_items = document.getElementById("post_items");
+			console.log(post_list)
+			for(let i=0;i<post_list.length;++i){
+				let post_id = document.createElement("span");
+				post_id.setAttribute("class","post_id");
+				post_id.innerHTML = post_list[i].postId;
+				post_items.appendChild(post_id)
 
+				let is_favour = document.createElement("span");
+				is_favour.setAttribute("class","isfavored");
+				if(post_list[i].isFavour == "true"){
+					is_favour.innerHTML = "已收藏"//收藏的图标
+				}else{
+					is_favour.innerHTML = "未收藏"//未收藏的图标
+				}
+				post_items.appendChild(is_favour)
 
+				let post_time = document.createElement("span");
+				post_time.setAttribute("class","post_id");
+				post_time.innerHTML = formatUnixTime(post_list[i].sendTime);
+				post_items.appendChild(post_time)
 
-
-
-
+				let content = document.createElement("div");
+				content.setAttribute("class","item");
+				let post_content = document.createElement("span");
+				post_content.setAttribute("class","host_element");
+				post_content.innerHTML = post_list[i].content;
+				content.appendChild(post_content);
+				for(let j=0;j<post_list[i].CommentList.length;++j){
+					let comment = document.createElement("span");
+					comment.setAttribute("class","comment_element");
+					comment.innerHTML = post_list[i].CommentList[j].content;
+					content.appendChild(comment);
+				}
+				post_items.appendChild(content);
+			}
 
 //`````````````………………………………………………………………………………………………………………………………………………………………………………
-
-
-
-
-
-
 
 		}).catch((error) => {
 			console.error(error);
 		});
 }
+
 init();
 
 //打开侧边栏和遮罩层
@@ -129,7 +184,10 @@ function login_or_signup() {
 				resolve("done");
 				//缓存学号，用cookie
 				id = num.value;
-				document.cookie = id;
+				console.log("id: ",id)
+				document.cookie = "id=" + id;
+				console.log("cookie: ",document.cookie)
+				init();
 			}).catch((error) => {
 				alert(error);
 				reject(error);
