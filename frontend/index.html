@@ -46,17 +46,26 @@
     </div>
     </br></br>
     <!--一条一条的树洞条目放这里，每一行最多10条回复，也就是1个host_element和10个comment_element-->
-    <div class="post_items">
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123111111111111111111111111111111111111111111111111111111</div>
-        <div>123</div>
+    <div id="post_items">
         <!--每一个条目，class为item-->
-        <div class="item">
-            <!--洞主的言论和评论-->
-            <span class="host_element"></span>
-            <span class="comment_element"></span>
+        <div class="item" id="hide_post">
+            <!--树洞号，是否收藏，发送时间-->
+            <span class="post_id">114514</span>
+            <span class="is_favored">以后改为SVG图标</span>
+            <span class="post_time">n天前 11:45</span>
+            <div>
+                <!--洞主的头像-->
+                <img class="host_head_icon" src="" alt="头像">
+                <!--洞主的言论和评论-->
+                <span class="host_element">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam aliquid facilis qui possimus. Tempore facilis, error odit excepturi numquam adipisci quos esse sed aspernatur ad illum aliquid eligendi repudiandae repellendus.
+                </span>
+                <ul class="comment_element">
+                    <li class="comment_preview">Alice: 114514</li>
+                    <li class="comment_preview">Bob: 1919810</li>
+                </ul>
+            </div>
+            
         </div>
 
     </div>
@@ -75,10 +84,21 @@
         </div>
         <!--详情页-->
         <div class="sidebar_content" id="details">
-            <!---->
             <!--条目-->
             <ul id="detailed_content">
-                这里放一个一个一个的条目
+                <!--这一条是模板，每次添加条目就是加一条这个，但是这个原始的应该隐藏-->
+                <li class="detailed_item" id="hide_item">
+                    <!--树洞号，发送时间-->
+                    <span class="post_id">114514</span>
+                    <span class="post_time">n天前 11:45</span>
+                    <!--内容-->
+                    <div>
+                        <img class="host_head_icon" src="" alt="头像">
+                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                    </div>
+                </li>
+
+                
             </ul>
             
             <!--评论编辑输入框-->
