@@ -1,5 +1,6 @@
 "use strict";
 var id = "1900012997"; //等会修改成从后端获取的id
+var cur_detail_post = 1;
 //axios的配置
 axios.defaults.baseURL = "http://localhost:8080/";
 var qs = Qs;
@@ -31,23 +32,28 @@ let avatar_url = ""
 
 
 function formatUnixTime(unixTimestamp) {
-	const dateObj = new Date(unixTimestamp * 1000); // 将秒数转化为毫秒数
-	const now = new Date(); // 当前时间
+	const diff = new Date() - new Date(unixTimestamp * 1000);
+	const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+	const hours = Math.floor((diff / (60 * 60 * 1000)) % 24);
+	const minutes = Math.floor((diff / (60 * 1000)) % 60);
+	const seconds = Math.floor((diff / 1000) % 60);
   
-	// 计算相差的总秒数、总分钟数、总小时数和总天数
-	const diffSeconds = Math.floor((now - dateObj) / 1000);
-	const diffMinutes = Math.floor(diffSeconds / 60);
-	const diffHours = Math.floor(diffMinutes / 60);
-	const diffDays = Math.floor(diffHours / 24);
-  
-	// 判断输出内容
-	if (diffDays > 0) {
-	  return `${diffDays}天${diffHours % 24}小时${diffMinutes % 60}分钟前`;
-	} else if (diffHours > 0) {
-	  return `${diffHours}小时${diffMinutes % 60}分钟前`;
-	} else {
-	  return `${diffMinutes}分钟前`;
+	let result = "";
+	if (days > 0) {
+	  result += `${days} 天 `;
 	}
+	
+	if (hours > 0) {
+	  result += `${hours} 小时 `;
+	}
+	
+	if (minutes > 0) {
+	  result += `${minutes} 分钟 `;
+	}
+	
+	result += `${seconds} 秒前`;
+	
+	return result;
   }
 
 function init() {
@@ -187,8 +193,7 @@ function login_or_signup() {
 	let psw = document.getElementById("password");
 
 	return new Promise((resolve, reject) => {
-		axios
-			.post(
+		axios.post(
 				"user/" + flag,
 				qs.stringify({
 					flag: flag,
@@ -363,6 +368,7 @@ function open_post(post_number) {
 	//树洞号
 	close_sidebar();
 	open_sidebar();
+	cur_detail_post = post_number;
 	document.getElementsByClassName("sidebar_buttons")[0].style.display =
 		"inline";
 	document.getElementById("details").style.display = "block";
@@ -427,7 +433,9 @@ function open_post(post_number) {
 				sub_content.setAttribute("class","detailed_text");
 				sub_content.innerHTML = comment_list[i].content;
 				sub_item.appendChild(sub_content);
-	
+				detailed_item.onclick = function(){
+					switch_reply_status(comment_list[i].commentId);
+				}
 				detailed_item.appendChild(sub_item);
 				detailed_content.appendChild(detailed_item);
 			}
@@ -558,20 +566,23 @@ avatar.addEventListener("click", function (event) {
 function submit_post() {
 	let input = document.getElementById("post_input");
 	let content = input.value;
-	axios
-		.post(
+	return new Promise((resolve, reject) => {
+	axios.post("/treehole/submitPost",
 			qs.stringify({
 				student_number: id,
 				content: content,
+				quoteId: -1,
 			})
 		).then((response) => {
 			console.log(response);
+
 			resolve("done");
-			init();
+			location.reload();
 		}).catch((error) => {
 			alert(error);
 			reject(error);
 		});
+	})
 }
 
 let reply_id = -1;
@@ -599,17 +610,21 @@ function switch_reply_status(comment_id){
 function submit_comment() {
 	let input = document.getElementById("comment_input");
 	let content = input.value;
-	//【特别注意】：reply_id这个元素还没写！！！！！
-	let replyId = document.getElementById("reply_id").innerHTML;
-	axios
-		.post("user/submitPost", { 
-			senderId: id,
+
+	return new Promise((resolve, reject) =>{
+	axios.post("treehole/commentPost", { 
+			student_number: id,
+			postId: cur_detail_post,
 			content: content,
-			replyId: replyId
+			replyId: reply_status==0?-1:reply_id,
 		}).then((response) => {
 			//open_post(post_number)来刷新
-			open_post(post_number);
+			console.log(response);
+
+			resolve("done");
+			open_post(cur_detail_post);
 		}).catch((error) => {
 			console.error(error);
 		});
+	})
 }
