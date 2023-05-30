@@ -154,15 +154,21 @@ function init() {
 	search_start_index = 1;
 	is_searching = 0;
 	queryPost();
+
+	document.body.addEventListener("scroll", function() {
+		const scrollHeight = document.body.scrollHeight;
+		const scrollTop = document.body.scrollTop;
+		const clientHeight = document.body.clientHeight;
+	  
+		if (scrollHeight - scrollTop === clientHeight) {
+		  // 已经滚动到了页面底部，执行相应的操作
+		  console.log("已经滚动到了页面底部！");
+		  query_more();
+		}
+	  });
 }
 init();
-let postItems = document.getElementById("post_items");
-postItems.addEventListener("scroll", function () {
-// 检查元素是否已滚动到底部
-console.log(postItems.scrollTop,postItems.clientHeight,postItems.scrollHeight)
-if (postItems.scrollTop + postItems.clientHeight == postItems.scrollHeight)
-	query_more();
-});
+
 //打开侧边栏和遮罩层
 function open_sidebar() {
 	document.getElementsByClassName("mask")[0].style.display = "block";
