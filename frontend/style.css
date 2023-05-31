@@ -385,14 +385,14 @@ body {
 /*边栏的顶部标签*/
 .sidebar_head {
 	width: 100%;
-	background-color: #76a886;
+	background-color: #b9fecf;
 	height: 30px;
 	text-align: center;
 }
 /*侧边栏的子div*/
 .sidebar_content {
 	margin: 0px 10px 0px 10px;
-	background-color: #711919;
+	background-color: #edeab5;
 	height: calc(100% - 30px);
 }
 /*关闭按钮*/
