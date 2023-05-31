@@ -475,6 +475,7 @@ function call_todolist_page() {
 	close_sidebar();
 	open_sidebar();
 	document.getElementById("sidebar_title").style.display = "inline";
+	document.getElementById("todo_page").style.display = "block";
 	document.getElementById("todolist").style.display = "block";
 	document.getElementById("sidebar_title").innerHTML = "待办";
 	//向后端请求toddolist的内容

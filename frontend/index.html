@@ -163,21 +163,23 @@
             <button id="post_submit" onclick="submit_post()">提交</button>
         </div>
         <!--todolist-->
-        <ul class="sidebar_content" id="todolist">
+        <div class="sidebar_content" id="todo_page">
+            <ul id="todolist">
         <!--条目的模板，这一条不显示，其它的复制这个，然后id改成别的，最后补上CSS-->
-            <li class="todo" id="hide_todo" todo-id="0" todo-priority="0">
+                <li class="todo" id="hide_todo" todo-id="0" todo-priority="0">
             <!--存储该条目的优先级，但不显示-->
                 <!-- <span class="priority" display="none"></span> -->
             <!--内容-->
-                <div class="todo_content">todo-test</div>
+                    <div class="todo_content">todo-test</div>
             <!--完成，置顶按钮-->
-                <button class="todo_complete" onclick="complete(this)">完成</button>
-                <button class="todo_top" onclick="t_top(this)">置顶</button>
-            </li>
-        </ul>
-        <div id="add_todo">
-            <textarea name="todo" id="todo_input"></textarea>
-            <button id="todo_submit" onclick="todo_submit()">新建</button>
+                    <button class="todo_complete" onclick="complete(this)">完成</button>
+                    <button class="todo_top" onclick="t_top(this)">置顶</button>
+                </li>
+            </ul>
+            <div id="add_todo">
+                <textarea name="todo" id="todo_input"></textarea>
+                <button id="todo_submit" onclick="todo_submit()">新建</button>
+            </div>
         </div>
     </div>
     <!--占页面左边一半的遮罩层-->
