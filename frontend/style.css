@@ -310,7 +310,7 @@ body {
 .comment_element > li{
 	display: inline-flex;
 	background:#0199d9;
-	height: auto;
+	height: 8px;
 }
 
 .comment_preview{
@@ -403,7 +403,7 @@ body {
 	position: fixed;
 	right: 0;
 	top: 44.33px;
-	background-color: #000c40;
+	background-color: #8fddeb;
 	z-index: 1;
 	overflow-y: scroll;
 }
@@ -650,5 +650,17 @@ body {
 
 }
 #hide_todo{
-
+	text-align: center;
 }
+.todo_content{
+	text-align: center;
+
+<<<<<<< HEAD
+}
+=======
+}
+#add_todo{
+	text-align: center;
+}
+
+>>>>>>> 8c2a00ac41a53244705d50cb2e1fa7970b80f60c
