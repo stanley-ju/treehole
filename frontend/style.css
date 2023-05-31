@@ -15,6 +15,30 @@ ul{
 button {
 	cursor: pointer;
 }
+
+.refresh{
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  cursor: pointer;
+  padding: 0 20px;
+  border: 1px solid #ffffff;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  font: normal 16px/normal "Times New Roman", Times, serif;
+  color: rgb(0, 0, 0);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: hsl(0, 0%, 100%);
+  -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
+  box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
+  text-shadow: -1px -1px 0 rgba(15,73,168,0.66) ;
+  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+}
 .search{
   display: inline-block;
   -webkit-box-sizing: content-box;
@@ -162,10 +186,59 @@ body {
 	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
 	text-shadow: 1px 1px 0 rgba(255,255,255,0.66) ;
-	-webkit-transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
-	-moz-transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
-	-o-transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
-	transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
+	-webkit-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	-moz-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	-o-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+
+.search_room:hover {
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	padding: 0 20px;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 28px;
+	border-radius: 28px;
+	font: normal 16px/normal "Times New Roman", Times, serif;
+	color: rgba(0,142,198,1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(252,252,252,1);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.66) ;
+	-webkit-transition: all 2s cubic-bezier(0.23, 1, 0.32, 1);
+	-moz-transition: all 2s cubic-bezier(0.23, 1, 0.32, 1);
+	-o-transition: all 2s cubic-bezier(0.23, 1, 0.32, 1);
+	transition: all 2s cubic-bezier(0.23, 1, 0.32, 1);
+	width: 300px;
+  }
+.search_room:focus{
+	
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	padding: 0 20px;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 28px;
+	border-radius: 28px;
+	font: normal 16px/normal "Times New Roman", Times, serif;
+	color: rgba(0,142,198,1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(252,252,252,1);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.66) ;
+	-webkit-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	-moz-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	-o-transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+	transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+    width: 300px;
 }
 /*导航栏相关~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .navigator {
@@ -222,12 +295,21 @@ body {
 
 /*评论预览*/
 .comment_element{
-	display: inline;
-	background: #b11010;
+	display:flex;
 	height: auto;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%!important;
+    margin-left: 0;
+    padding-left: 30px;
+
+
 }
 .comment_element > li{
-
+	display: inline-flex;
+	background:#0199d9;
+	height: auto;
 }
 
 .comment_preview{
@@ -235,7 +317,25 @@ body {
     flex: 0 0 300px;
     max-height: 15em;
     margin-right: -7px;
-    overflow-y: hidden
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+		width: 141px;
+		padding: 8px;
+		overflow: hidden;
+		border: 5px solid;
+		-webkit-border-radius: 17px;
+		border-radius: 17px;
+		font: normal 16px/1 "Times New Roman", Times, serif;
+		color: rgba(255,255,255,1);
+		text-align: center;
+		-o-text-overflow: ellipsis;
+		text-overflow: ellipsis;
+		background: #0199d9;
+		-webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
+		box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
+
 }
 
 .post_id{
@@ -312,15 +412,29 @@ body {
 /*边栏的顶部标签*/
 .sidebar_head {
 	width: 100%;
-	background-color: #76a886;
+	background-color: #b9fecf;
 	height: 30px;
 	text-align: center;
 }
 /*侧边栏的子div*/
-.sidebar_content {
-	margin: 0px 10px 0px 10px;
-	background-color: #711919;
-	height: calc(100% - 30px);
+.sidebar_head {
+	width: 100%;
+	background-color: #b9fecf;
+	height: 30px;
+	text-align: center;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    border: none;
+    font: normal 20px/normal "Anton", Helvetica, sans-serif;
+    color: rgb(112, 112, 112);
+    text-transform: uppercase;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    letter-spacing: 1px;
+    text-shadow:1px 1px 0 rgb(122, 232, 161) , 2px 2px 0 rgb(26, 98, 5) ;
+
 }
 /*关闭按钮*/
 .close_sidebar {
@@ -371,12 +485,58 @@ body {
 }
 /*输入框*/
 #comment_input {
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	width: 90%;
+	height: calc(100% - 1px);
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 3px;	
+	border-radius: 3px;
+	font: normal medium/normal Arial, Helvetica, sans-serif;
+	color: rgba(0,142,198,1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(255,255,255,1);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.66) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  
+  #comment_input:hover {
 	position: absolute;
 	height: calc(100% - 1px);
 	width: 90%;
 	resize: none;
 	overflow: scroll;
-}
+	padding: 0 20px;
+	border: 1px solid #a3a3a3;
+	-webkit-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  
+  #comment_input:focus {
+	position: absolute;
+	height: calc(100% - 1px);
+	width: 90%;
+	resize: none;
+	overflow: scroll;
+	padding: 10px 20px;
+	border: 1px solid #018dc4;
+	-webkit-box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2) inset;
+	-webkit-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
 /*提交按钮*/
 #comment_submit {
 	position: absolute;
@@ -404,21 +564,75 @@ body {
 .sidebar #edit_post {
 	display: none;
 }
-/*输入框*/
+/*输入框~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #post_input {
-	width: calc(100% - 7px);
-	height: 90%;
-	resize: none;
-	overflow: scroll;
-}
-/*提交按钮*/
-#post_submit {
-	width: calc(100% - 20px);
-	height: calc(10% - 8px);
-	position: absolute;
-	left: 10px;
-	bottom: 0;
-}
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	width: 95%;
+	height: 27%;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 3px;	
+	border-radius: 3px;
+	font: normal medium/normal Arial, Helvetica, sans-serif;
+	color: rgba(0,142,198,1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(255,255,255,1);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.66) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  
+  #post_input:hover {
+	width: 90%;
+	height: 80%;
+	padding: 0 20px;
+	border: 1px solid #a3a3a3;
+	-webkit-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  
+  #post_input:focus {
+	width: 90%;
+	height: 80%;
+	padding: 10px 20px;
+	border: 1px solid #018dc4;
+	-webkit-box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2) inset;
+	-webkit-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+/*提交按钮~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  #post_submit  {
+	display: inline-block;
+	margin: 0 auto;
+	box-sizing: border-box;
+	width: 8.875rem;
+	height: 2.5rem;
+	cursor: pointer;
+	padding: 0.625rem 2.25rem;
+	border: none;
+	border-radius: 1.875rem;
+	font: bold 0.9375rem/1.5 "Battambang", Helvetica, sans-serif;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	text-overflow: clip;
+	background: #e93a30;
+	transition: background 0.2s var(--cubic-bezier);
+  }
+  
+  
 
 /*边栏-todolist~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .sidebar #todolist {
