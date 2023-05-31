@@ -310,7 +310,7 @@ body {
 .comment_element > li{
 	display: inline-flex;
 	background:#0199d9;
-	height: auto;
+	height: 8px;
 }
 
 .comment_preview{
