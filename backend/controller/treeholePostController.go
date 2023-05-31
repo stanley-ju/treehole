@@ -206,6 +206,8 @@ func CancelFavoritePost(ctx *gin.Context) {
 func QueryFavoritePost(ctx *gin.Context) {
 	db := common.GetDB()
 	studentNumber := ctx.PostForm("student_number")
+	startIndex, _ := strconv.Atoi(ctx.PostForm("startIndex"))
+	postNum, _ := strconv.Atoi(ctx.PostForm("postNum"))
 
 	favourId := []int{}
 	favour := []model.FavourPost{}
@@ -217,7 +219,7 @@ func QueryFavoritePost(ctx *gin.Context) {
 	favourPosts := []model.TreeholePost{}
 	resp := []posts{}
 
-	result := db.Where("id in ?", favourId).Find(&favourPosts)
+	result := db.Where("id in ?", favourId).Order("id desc").Limit(postNum).Offset(startIndex - 1).Find(&favourPosts)
 
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{

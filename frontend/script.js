@@ -28,11 +28,14 @@ function logout() {
 
 let start_index = 1
 let search_start_index = 1
+let favour_start_index = 1
 let post_num = 20
 let search_post_num = 20
+let favour_post_num = 10
 let avatar_url = ""
 let search_keyword = ""
 let is_searching = 0
+let is_favour = 0
 
 function queryPost(){
 	return new Promise((resolve, reject) => {
@@ -134,7 +137,7 @@ function scroll_bottom() {
 	const scrollTop = document.body.scrollTop;
 	const clientHeight = document.body.clientHeight;
 	console.log(scrollHeight,scrollTop,clientHeight);
-	if (scrollHeight - scrollTop == clientHeight+1) {
+	if (scrollHeight - scrollTop == clientHeight+5) {
 	  // 已经滚动到了页面底部，执行相应的操作
 	  console.log("已经滚动到了页面底部！");
 	  query_more();
@@ -167,6 +170,7 @@ function init() {
 	start_index = 1;
 	search_start_index = 1;
 	is_searching = 0;
+	is_favour = 0;
 	document.body.scrollTop = 0;
 	queryPost();
 
@@ -347,6 +351,7 @@ function search() {
 	}
 	search_start_index = 1;
 	is_searching = 1;
+	is_favour = 0;
 	close_sidebar();
 	let post_items = document.getElementById("post_items");
 	document.body.removeEventListener("scroll",scroll_bottom());
@@ -359,10 +364,12 @@ function search() {
 }
 
 function query_more(){
-	if(is_searching == 0){
-		queryPost();
-	}else{
+	if(is_searching == 1){
 		queryPostWithKeyword();
+	}else if(is_favour == 1){
+		queryFavourPost();
+	}else{
+		queryPost();
 	}
 }                                            
 
@@ -374,10 +381,90 @@ function call_post_page() {
 	document.getElementById("edit_post").style.display = "block";
 	document.getElementById("sidebar_title").innerHTML = "编辑树洞";
 }
+
+function queryFavourPost(){
+	return new Promise((resolve, reject) => {
+		axios.post("treehole/queryFavoritePost", { 
+			student_number: id ,startIndex:favour_start_index,postNum:favour_post_num,
+		}).then((response) => {
+				let post_list = response.data.postList;
+				let post_items = document.getElementById("post_items");
+				console.log(post_list)
+				for(let i=0;i<post_list.length;++i){
+					let content = document.createElement("div");
+					content.setAttribute("class","item");
+	
+					let post_id = document.createElement("span");
+					post_id.setAttribute("class","post_id");
+					post_id.innerHTML = "#" + post_list[i].postId;
+					content.appendChild(post_id)
+	
+					let is_favour = document.createElement("span");
+					is_favour.setAttribute("class","isfavored");
+					if(post_list[i].isFavour == "true"){
+						is_favour.innerHTML = "已收藏"//收藏的图标
+					}else{
+						is_favour.innerHTML = "未收藏"//未收藏的图标
+					}
+					content.appendChild(is_favour)
+	
+					let post_time = document.createElement("span");
+					post_time.setAttribute("class","post_time");
+					post_time.innerHTML = formatUnixTime(post_list[i].sendTime);
+					content.appendChild(post_time)
+	
+					let sub_content = document.createElement("div");
+					sub_content.setAttribute("class","sub_content");
+	
+					let post_content = document.createElement("span");
+					post_content.setAttribute("class","host_element");
+					post_content.innerHTML = post_list[i].content;
+					sub_content.appendChild(post_content);
+	
+					let sub_img = document.createElement("img");
+					sub_img.setAttribute("class","host_head_icon");
+					sub_img.src = avatar_url;
+	
+					let comment_list = document.createElement("ul");
+					comment_list.setAttribute("class","comment_element");
+					for(let j=0;j<post_list[i].CommentList.length;++j){
+						let comment = document.createElement("li");
+						comment.setAttribute("class","comment_preview");
+						comment.innerHTML = post_list[i].CommentList[j].content;
+						comment_list.appendChild(comment);
+					}
+					sub_content.appendChild(comment_list);
+					content.appendChild(sub_content);
+					content.onclick = function(){
+						open_post(post_list[i].postId);
+					}
+					post_items.appendChild(content);
+				}
+				favour_start_index += post_list.length;
+				resolve("done");
+			}).catch((error) => {
+				console.error(error);
+				reject(error);
+			});
+	});
+}
+
 //调出收藏页面
 function call_collection_page() {
 	close_sidebar();
 	//未完待续~~~~~~~~~~~~~~~~~~
+	favour_start_index = 1;
+	is_searching = 0;
+	is_favour = 1;
+
+	let post_items = document.getElementById("post_items");
+	document.body.removeEventListener("scroll",scroll_bottom());
+	while (post_items.firstChild) { // 不断遍历子节点列表直到为空
+		post_items.removeChild(post_items.firstChild); // 删除第一个子节点
+	}                 
+	queryFavourPost();
+	document.body.scrollTop = 0;
+	document.body.addEventListener("scroll", scroll_bottom);
 }
 
 
