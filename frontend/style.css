@@ -365,7 +365,7 @@ button {
 	position: fixed;
 	right: 0;
 	top: 44.33px;
-	background-color: #000c40;
+	background-color: rgba(173, 216, 230, 0.8);
 	z-index: 1;
 	overflow-y: scroll;
 }
@@ -509,18 +509,26 @@ button {
 .sidebar #account_info {
 	display: none;
 	text-align: center;
-	color:white;
+	color:rgb(0, 0, 0);
 }
-#account_info button{
-	background-color: #636363;
-	border-style: solid;
-	border-radius: 2px;
+#account_info button {
+    background-color: #9ff2df;
+    border-style: solid;
+    border-radius: 2px;
+    color: black;
 }
 
 /*头像*/
 #user_avatar {
 	width: 40px;
 	height: 40px;
+}
+
+#user_id{
+	color: #000000
+}
+#user_info>div{
+	color: #000000;
 }
 
 .host_head_icon {
@@ -596,7 +604,7 @@ button {
 	text-align: center;
 	text-transform: uppercase;
 	text-overflow: clip;
-	background: #e93a30;
+	background: #3051e9;
 	transition: background 0.2s var(--cubic-bezier);
 }
 
@@ -879,10 +887,15 @@ button.call_account:hover {
 	margin-top: 0;
 }
 
+
+#change_password{
+	color: #000000;	
+}
 /*应该隐藏的可复制组件*/
 #hide_post {
 }
 #hide_item {
 }
 #hide_todo {
+	    text-align: center;
 }
