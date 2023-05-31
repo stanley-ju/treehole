@@ -328,9 +328,7 @@ function queryPostWithKeyword(){
 					}
 					post_items.appendChild(content);
 				}
-
-					search_start_index += post_list.length;
-
+				search_start_index += post_list.length;
 				resolve("done");
 			}).catch((error) => {
 				console.error(error);
@@ -393,32 +391,107 @@ function call_todolist_page() {
 	document.getElementById("todolist").style.display = "block";
 	document.getElementById("sidebar_title").innerHTML = "待办";
 	//向后端请求toddolist的内容
+	return new Promise((resolve, reject) => {
+		axios.post("treehole/todoQueryAll",{student_number:id}).then((response)=>{
+			let todoList = response.data.todoList;
+			let todo_items = document.getElementById("todolist");
+			while (todo_items.firstChild) { // 不断遍历子节点列表直到为空
+				todo_items.removeChild(todo_items.firstChild); // 删除第一个子节点
+			}
+			for(let i=0;i<todoList.length;++i){
+				let todo_item = document.createElement("li");
+				todo_item.setAttribute("class","todo");
+				todo_item.setAttribute("todo-id",todoList[i].ID);
+				todo_item.setAttribute("todo-priority",todoList[i].Priority);
 
+				let todo_content = document.createElement("div");
+				todo_content.setAttribute("class","todo_content");
+				todo_content.innerHTML = todoList[i].Content;
+				todo_item.appendChild(todo_content);
 
+				let complete_button = document.createElement("button");
+				complete_button.setAttribute("class","todo_complete");
+				complete_button.setAttribute("onclick","complete(this)");
+				complete_button.innerHTML = "完成";
+				todo_item.appendChild(complete_button);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+				let top_button = document.createElement("button");
+				top_button.setAttribute("class","todo_top");
+				top_button.setAttribute("onclick","t_top(this)");
+				top_button.innerHTML = "置顶";
+				todo_item.appendChild(top_button);		
+				
+				todo_items.appendChild(todo_item);
+			}
+			resolve("done");
+		}).catch((error) => {
+			console.error(error);
+			reject(error);
+		});
+	})
 
 }
 //添加待办条目
-function add_todo(){
+function todo_submit(){
+	let content = document.getElementById("todo_input").value
+	return new Promise((resolve, reject) => {
+		axios.post("treehole/todoCreate",{
+			student_number: id,
+			content: content,
+			status: "todo",
+			priority: 0,
+		}).then((response)=>{
+			console.log(response);
+			call_todolist_page();
+			resolve("done");
+		}).catch((error) => {
+			console.error(error);
+			reject(error);
+		});
+	})
+}
 
+function complete(object){
+	let node = object.parentNode
+	let todo_id = node.getAttribute("todo-id");
+	let todo_status = "finish"
+
+	return new Promise((resolve, reject) => {
+		axios.post("treehole/todoUpdate",{
+			student_number: id,
+			todoId: todo_id,
+			status: todo_status,
+		}).then((response)=>{
+			console.log(response);
+			call_todolist_page();
+			resolve("done");
+		}).catch((error) => {
+			console.error(error);
+			reject(error);
+		});
+	})
 }
 
 //修改待办条目
-function change_todo(todo_id){
-	
+function t_top(object){
+	let node = object.parentNode
+	let todo_id = node.getAttribute("todo-id");
+	let todo_priority = parseInt(node.parentNode.firstElementChild.getAttribute("todo-priority")) + 1
+
+	return new Promise((resolve, reject) => {
+		axios.post("treehole/todoUpdate",{
+			student_number: id,
+			todoId: todo_id,
+			priority: todo_priority,
+		}).then((response)=>{
+			console.log(response);
+			call_todolist_page();
+			resolve("done");
+		}).catch((error) => {
+			console.error(error);
+			reject(error);
+		});
+	})
 }
 
 

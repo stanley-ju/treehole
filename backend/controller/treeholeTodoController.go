@@ -39,7 +39,7 @@ func TodoQueryAll(ctx *gin.Context) {
 	studentNumber := ctx.PostForm("student_number")
 	todoList := []model.Todo{}
 
-	result := db.Where("student_number = ?", studentNumber).Find(&todoList)
+	result := db.Where("student_number = ? and status = ?", studentNumber, "todo").Order("priority desc").Order("created_at desc").Find(&todoList)
 
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -59,15 +59,23 @@ func TodoUpdate(ctx *gin.Context) {
 	studentNumber := ctx.PostForm("student_number")
 	content := ctx.PostForm("content")
 	status := ctx.PostForm("status")
-	priority, _ := strconv.Atoi(ctx.PostForm("priority"))
+	priority := ctx.PostForm("priority")
 	pre_todo := model.Todo{}
 	db.Where("id = ?", id).Find(&pre_todo)
-	result := db.Model(&pre_todo).Updates(&model.Todo{
+	update_todo := model.Todo{
 		StudentNumber: studentNumber,
-		Content:       content,
-		Status:        status,
-		Priority:      priority,
-	})
+	}
+	if content != "" {
+		update_todo.Content = content
+	}
+	if status != "" {
+		update_todo.Status = status
+	}
+	if priority != "" {
+		update_todo.Priority, _ = strconv.Atoi(priority)
+	}
+
+	result := db.Model(&pre_todo).Updates(&update_todo)
 
 	if result.Error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
