@@ -70,15 +70,21 @@ function queryPost(){
 	
 					let sub_content = document.createElement("div");
 					sub_content.setAttribute("class","sub_content");
+
+					let sub_img = document.createElement("img");
+					sub_img.setAttribute("class","host_head_icon");
+					axios.post("user/queryStudentInfo", { student_number: post_list[i].senderId })
+					.then((response) => {
+						sub_img.src = response.data.avatarURL;
+					}).catch((error) => {
+						console.error(error);
+					});
+					sub_content.appendChild(sub_img);
 	
 					let post_content = document.createElement("span");
 					post_content.setAttribute("class","host_element");
 					post_content.innerHTML = post_list[i].content;
 					sub_content.appendChild(post_content);
-	
-					let sub_img = document.createElement("img");
-					sub_img.setAttribute("class","host_head_icon");
-					sub_img.src = avatar_url;
 	
 					let comment_list = document.createElement("ul");
 					comment_list.setAttribute("class","comment_element");
@@ -308,14 +314,20 @@ function queryPostWithKeyword(){
 					let sub_content = document.createElement("div");
 					sub_content.setAttribute("class","sub_content");
 	
+					let sub_img = document.createElement("img");
+					sub_img.setAttribute("class","host_head_icon");
+					axios.post("user/queryStudentInfo", { student_number: post_list[i].senderId })
+					.then((response) => {
+						sub_img.src = response.data.avatarURL;
+					}).catch((error) => {
+						console.error(error);
+					});
+					sub_content.appendChild(sub_img);
+					
 					let post_content = document.createElement("span");
 					post_content.setAttribute("class","host_element");
 					post_content.innerHTML = post_list[i].content;
 					sub_content.appendChild(post_content);
-	
-					let sub_img = document.createElement("img");
-					sub_img.setAttribute("class","host_head_icon");
-					sub_img.src = avatar_url;
 	
 					let comment_list = document.createElement("ul");
 					comment_list.setAttribute("class","comment_element");
@@ -416,14 +428,20 @@ function queryFavourPost(){
 					let sub_content = document.createElement("div");
 					sub_content.setAttribute("class","sub_content");
 	
+					let sub_img = document.createElement("img");
+					sub_img.setAttribute("class","host_head_icon");
+					axios.post("user/queryStudentInfo", { student_number: post_list[i].senderId })
+					.then((response) => {
+						sub_img.src = response.data.avatarURL;
+					}).catch((error) => {
+						console.error(error);
+					});
+					sub_content.appendChild(sub_img);
+
 					let post_content = document.createElement("span");
 					post_content.setAttribute("class","host_element");
 					post_content.innerHTML = post_list[i].content;
 					sub_content.appendChild(post_content);
-	
-					let sub_img = document.createElement("img");
-					sub_img.setAttribute("class","host_head_icon");
-					sub_img.src = avatar_url;
 	
 					let comment_list = document.createElement("ul");
 					comment_list.setAttribute("class","comment_element");

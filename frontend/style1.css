@@ -251,7 +251,6 @@ body {
 	right: 0%;
 	margin: 0;
 	z-index: 1;
-	text-align: center; 
 }
 
 /*登录界面~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -270,7 +269,7 @@ body {
 }
 
 /*主页树洞条目~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#post_items {
+/* #post_items {
 	display: block;
 	position: relative;
 	margin: 0;
@@ -284,17 +283,17 @@ body {
 	overflow-y: hidden;
 	overflow-x: hidden;
 	z-index: 0;
-}
+} */
 
-.item > div{
+/* .item > div{
 	height:80px;
 	width: auto;
 	margin: 8px;
 	background-color: #76a886;
-}
+} */
 
 
-/*评论预览*/
+/* 评论预览
 .comment_element{
 	display:flex;
 	height: auto;
@@ -344,7 +343,7 @@ body {
 }
 .post_time{
 	color: #666
-}
+} */
 
 
 
@@ -640,8 +639,254 @@ body {
 	display: none;
 }
 
+.login_or_signup {
+	background-color: #f1f1f1;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+	text-align: center;
+  }
+  
+  .login_or_signup table {
+	margin: auto;
+	border-collapse: collapse;
+	text-align: left;
+  }
+  
+  .login_or_signup label {
+	font-size: 16px;
+	font-weight: bold;
+	padding-right: 10px;
+  }
+  
+  .login_or_signup input[type="text"],
+  .login_or_signup input[type="password"] {
+	width: 100%;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+	font-size: 16px;
+  }
+  
+  #login_or_signup_button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-top: 10px;
+	font-size: 16px;
+  }
+  
+  #login_or_signup_button:hover {
+	background-color: #3e8e41;
+  }
+  
+  #turn_to_login_or_signup {
+	font-size: 14px;
+	text-decoration: underline;
+	cursor: pointer;
+  }
 
 
+  .navigator {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: rgba(173, 216, 230, 0.8);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box;
+  }
+  
+  .navigator div:first-child {
+	font-size: 26px;
+	font-weight: bold;
+	font-family: 'Lato', sans-serif;
+	text-shadow: 1px 1px 1px #ccc;
+  }
+  
+  button {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	overflow: visible;
+	cursor: pointer;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-size: 16px;
+	line-height: normal;
+	font-weight: 600;
+	font-family: 'Lato', sans-serif;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px #ccc;
+	transition: all 0.2s ease-in-out;
+  }
+  
+  button.refresh {
+	background: linear-gradient(#f7f7f7, #e5e5e5);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	padding: 6px 12px;
+	border-radius: 5px;
+	margin-right: 5px;
+  }
+  
+  button.refresh:hover {
+	transform: scale(1.05);
+  }
+  
+  input.search_room {
+	padding: 6px 12px;
+	margin-right: 5px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+	font-family: 'Lato', sans-serif;
+	background-color: #f8f8f8;
+	text-shadow: 1px 1px 1px #ccc;
+  }
+  
+  button.search {
+	background: linear-gradient(#f7f7f7, #e5e5e5);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	padding: 6px 12px;
+	border-radius: 5px;
+	margin-right: 5px;
+  }
+  
+  button.search:hover {
+	transform: scale(1.05);
+  }
+  
+  button.call_post_page,
+  button.call_collection,
+  button.call_todolist,
+  button.call_account {
+	background: linear-gradient(#f7f7f7, #e5e5e5);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	padding: 6px 12px;
+	border-radius: 5px;
+  }
+  
+  button.call_post_page:hover,
+  button.call_collection:hover,
+  button.call_todolist:hover,
+  button.call_account:hover {
+	transform: translateY(-2px);
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  #post_items {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+  }
+  
+  .item {
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	width: 800px;
+	background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .post_id {
+	font-size: 24px;
+	font-weight: bold;
+	color: black;
+	margin-bottom: 5px;
+	margin-right: 10px;
+  }
+  
+  .is_favored {
+	font-size: 14px;
+	color: black;
+	margin-left: 30px;
+	margin-right: 10px;
+  }
+  
+  .post_time {
+	font-size: 14px;
+	color: black;
+	margin-left: 10px;
+	margin-right: 10px;
+  }
+  
+  .sub_content {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	position: relative;
+  }
+  
+  .host_head_icon {
+	flex-shrink: 0;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin-right: 10px;
+  }
+  
+  .host_element {
+	font-size: 16px;
+	line-height: 1.5;
+	display: block;
+	max-width: 400px;
+	min-width: 400px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 5px;
+  }
+  
+  .comment_preview {
+	font-size: 14px;
+	color: #666;
+	margin-right: 20px;
+	line-height: 1.5;
+	min-width: 180px;
+	max-width: 180px;
+	margin-bottom: 10px;
+	min-height: 60px;
+	max-height: 60px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #eee;
+	word-break: break-all;
+	white-space: normal;
+	overflow: hidden;
+  }
+  
+  .comment_element {
+	left: 60%;
+	height: 100%;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	padding: 10px;
+	border-radius: 5px;
+  }
+  
+  .comment_element li:not(:last-child) {
+	margin-right: 10px;
+  }
+  
+  .comment_list {
+	margin-top: 20px;
+  }
+  
+  .comment_list:first-of-type {
+	margin-top: 0;
+  }
+  
 /*应该隐藏的可复制组件*/
 #hide_post{
 
