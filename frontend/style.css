@@ -650,5 +650,13 @@ body {
 
 }
 #hide_todo{
+	text-align: center;
+}
+.todo_content{
+	text-align: center;
 
 }
+#add_todo{
+	text-align: center;
+}
+
