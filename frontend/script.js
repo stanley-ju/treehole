@@ -137,7 +137,7 @@ function scroll_bottom() {
 	const scrollTop = document.body.scrollTop;
 	const clientHeight = document.body.clientHeight;
 	console.log(scrollHeight,scrollTop,clientHeight);
-	if (scrollHeight - scrollTop == clientHeight+5) {
+	if (scrollHeight - scrollTop == clientHeight+1) {
 	  // 已经滚动到了页面底部，执行相应的操作
 	  console.log("已经滚动到了页面底部！");
 	  query_more();
@@ -881,7 +881,10 @@ function switch_reply_status(comment_id){
 	}
 
 	if(reply_status==1){
-		//将RE span改成可见的
+		document.getElementById("reply_item").style.display = "block";
+		document.getElementById("reply_item").innerHTML = "RE" + reply_id.toString();
+	}else{
+		document.getElementById("reply_item").style.display = "none";
 	}
 }
 
