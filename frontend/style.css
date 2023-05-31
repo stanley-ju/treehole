@@ -390,10 +390,24 @@ body {
 	text-align: center;
 }
 /*侧边栏的子div*/
-.sidebar_content {
-	margin: 0px 10px 0px 10px;
-	background-color: #edeab5;
-	height: calc(100% - 30px);
+.sidebar_head {
+	width: 100%;
+	background-color: #b9fecf;
+	height: 30px;
+	text-align: center;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    border: none;
+    font: normal 20px/normal "Anton", Helvetica, sans-serif;
+    color: rgb(112, 112, 112);
+    text-transform: uppercase;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    letter-spacing: 1px;
+    text-shadow:1px 1px 0 rgb(122, 232, 161) , 2px 2px 0 rgb(26, 98, 5) ;
+
 }
 /*关闭按钮*/
 .close_sidebar {
