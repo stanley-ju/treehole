@@ -295,12 +295,21 @@ body {
 
 /*评论预览*/
 .comment_element{
-	display: inline;
-	background: #b11010;
+	display:flex;
 	height: auto;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%!important;
+    margin-left: 0;
+    padding-left: 30px;
+
+
 }
 .comment_element > li{
-
+	display: inline-flex;
+	background:#0199d9;
+	height: auto;
 }
 
 .comment_preview{
@@ -308,7 +317,25 @@ body {
     flex: 0 0 300px;
     max-height: 15em;
     margin-right: -7px;
-    overflow-y: hidden
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+		width: 141px;
+		padding: 8px;
+		overflow: hidden;
+		border: 5px solid;
+		-webkit-border-radius: 17px;
+		border-radius: 17px;
+		font: normal 16px/1 "Times New Roman", Times, serif;
+		color: rgba(255,255,255,1);
+		text-align: center;
+		-o-text-overflow: ellipsis;
+		text-overflow: ellipsis;
+		background: #0199d9;
+		-webkit-box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
+		box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.3) ;
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.2) ;
+
 }
 
 .post_id{
