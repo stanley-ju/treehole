@@ -623,10 +623,11 @@ button {
 	padding-left: 10px;
 }
 #todolist > li {
-	background-color: #457fac;
+	background-color: hsl(308.96924337735175, 50%, 90%);
 	border-style: solid;
 	border-radius: 3px;
 }
+
 
 #add_todo {
 	height: 20%;
