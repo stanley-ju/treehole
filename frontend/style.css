@@ -404,21 +404,75 @@ body {
 .sidebar #edit_post {
 	display: none;
 }
-/*输入框*/
+/*输入框~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #post_input {
-	width: calc(100% - 7px);
-	height: 90%;
-	resize: none;
-	overflow: scroll;
-}
-/*提交按钮*/
-#post_submit {
-	width: calc(100% - 20px);
-	height: calc(10% - 8px);
-	position: absolute;
-	left: 10px;
-	bottom: 0;
-}
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	width: 95%;
+	height: 27%;
+	border: 1px solid #b7b7b7;
+	-webkit-border-radius: 3px;	
+	border-radius: 3px;
+	font: normal medium/normal Arial, Helvetica, sans-serif;
+	color: rgba(0,142,198,1);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: rgba(255,255,255,1);
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.66) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  
+  #post_input:hover {
+	width: 90%;
+	height: 80%;
+	padding: 0 20px;
+	border: 1px solid #a3a3a3;
+	-webkit-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  
+  #post_input:focus {
+	width: 90%;
+	height: 80%;
+	padding: 10px 20px;
+	border: 1px solid #018dc4;
+	-webkit-box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2) inset;
+	box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2) inset;
+	-webkit-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+  }
+/*提交按钮~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  #post_submit  {
+	display: inline-block;
+	margin: 0 auto;
+	box-sizing: border-box;
+	width: 8.875rem;
+	height: 2.5rem;
+	cursor: pointer;
+	padding: 0.625rem 2.25rem;
+	border: none;
+	border-radius: 1.875rem;
+	font: bold 0.9375rem/1.5 "Battambang", Helvetica, sans-serif;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	text-overflow: clip;
+	background: #e93a30;
+	transition: background 0.2s var(--cubic-bezier);
+  }
+  
+  
 
 /*边栏-todolist~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .sidebar #todolist {
