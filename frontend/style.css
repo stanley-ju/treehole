@@ -230,6 +230,22 @@ body {
 
 }
 
+.comment_preview{
+    -ms-flex: 0 0 300px;
+    flex: 0 0 300px;
+    max-height: 15em;
+    margin-right: -7px;
+    overflow-y: hidden
+}
+
+.post_id{
+	color: #666
+}
+.post_time{
+	color: #666
+}
+
+
 
 
 
